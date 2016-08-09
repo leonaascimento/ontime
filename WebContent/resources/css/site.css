@@ -1,0 +1,25 @@
+html {
+	position: relative;
+	min-height: 100%;
+}
+
+body {
+	padding-top: 70px;
+	margin-bottom: 60px;
+}
+
+footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 60px;
+}
+
+footer > .container {
+	padding-right: 15px;
+	padding-left: 15px;
+}
+
+footer > .container .text-muted {
+	margin: 20px 0;
+}

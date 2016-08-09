@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" th:include="shared/layout :: layout">
 <head>
-<title>Insert title here</title>
 </head>
 <body>
-	<h1 th:text="${name}">Project name</h1>
+	<div th:fragment="content">
+		<h1 th:text="${name}">Project name</h1>
+	</div>
 </body>
 </html>

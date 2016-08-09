@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="layout">
+<head>
+<title>Ontime</title>
+<!-- styles -->
+<link rel="stylesheet" type="text/css" href="resources/css/paper-bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="resources/css/site.css" />
+</head>
+<body>
+	<nav th:replace="shared/header :: header"></nav>
+	<div class="container">
+		<div th:include="this :: content"></div>
+	</div>
+	<footer th:replace="shared/footer :: footer"></footer>
+	<!-- scripts -->
+	<script type="text/javascript" src="resources/js/jquery-3.1.0.min.js"></script>
+	<script type="text/javascript" src="resources/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="resources/js/site.js"></script>
+</body>
+</html>

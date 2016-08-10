@@ -9,15 +9,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ontime.dao.ProjectDAO;
 import com.ontime.model.Project;
-import com.ontime.model.User;
+import com.ontime.util.CurrentUser;
 
 @Service
 public class ProjectService {
+	
+	private CurrentUser currentUser;
 	private ProjectDAO dao;
 
 	@Autowired
-	public ProjectService(ProjectDAO dao) {
+	public ProjectService(ProjectDAO dao, CurrentUser currentUser) {
 		this.dao = dao;
+		this.currentUser = currentUser;
 	}
 	
 	public List<Project> getList() {
@@ -31,11 +34,7 @@ public class ProjectService {
 	@Transactional
 	public void add(Project project) {
 		project.setCreatedAt(Calendar.getInstance().getTime());
-		
-		User owner = new User();
-		owner.setId(1);
-	
-		project.setOwner(owner);
+		project.setOwner(currentUser.getUser());
 		dao.add(project);
 	}
 	
@@ -48,4 +47,5 @@ public class ProjectService {
 	public void remove(Project project) {
 		dao.remove(project);
 	}
+	
 }

@@ -5,7 +5,14 @@
 	id="WebApp_ID" version="3.1">
 
 	<display-name>ontime</display-name>
-
+	
+	<!-- Expose current session on Spring web application -->
+	<listener>
+		<listener-class>
+			org.springframework.web.context.request.RequestContextListener
+		</listener-class>
+	</listener>
+	
 	<!-- Spring MVC -->
 	<servlet>
 		<servlet-name>springmvc-dispatcher</servlet-name>

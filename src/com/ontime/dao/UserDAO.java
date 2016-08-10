@@ -13,33 +13,33 @@ import com.ontime.model.User;
 public class UserDAO {
 	
 	@PersistenceContext
-	private EntityManager context;
+	private EntityManager em;
 
 	public List<User> getList() {
 		String criteria = "select u from User u";
-		return context.createQuery(criteria, User.class).getResultList();
+		return em.createQuery(criteria, User.class).getResultList();
 	}
 
 	public User get(int id) {
 		String criteria = "select u from User u where u.id = :id";
-		return context.createQuery(criteria, User.class).setParameter("id", id).getSingleResult();
+		return em.createQuery(criteria, User.class).setParameter("id", id).getSingleResult();
 	}
 
 	public User get(String email) {
 		String criteria = "select u from User u where u.email = :email";
-		return context.createQuery(criteria, User.class).setParameter("email", email).getSingleResult();
+		return em.createQuery(criteria, User.class).setParameter("email", email).getSingleResult();
 	}
 
 	public void add(User user) {
-		context.persist(user);
+		em.persist(user);
 	}
 
 	public void update(User user) {
-		context.persist(user);
+		em.persist(user);
 	}
 
 	public void remove(User user) {
-		context.remove(user);
+		em.remove(em.contains(user) ? user : em.merge(user));
 	}
 	
 }

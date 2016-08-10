@@ -13,28 +13,28 @@ import com.ontime.model.Project;
 public class ProjectDAO {
 	
 	@PersistenceContext
-	private EntityManager context;
+	private EntityManager em;
 
 	public List<Project> getList() {
 		String criteria = "select p from Project p";
-		return context.createQuery(criteria, Project.class).getResultList();
+		return em.createQuery(criteria, Project.class).getResultList();
 	}
 
 	public Project get(int id) {
 		String criteria = "select p from Project p where p.id = :id";
-		return context.createQuery(criteria, Project.class).setParameter("id", id).getSingleResult();
+		return em.createQuery(criteria, Project.class).setParameter("id", id).getSingleResult();
 	}
 
 	public void add(Project project) {
-		context.persist(project);
+		em.persist(project);
 	}
 
 	public void update(Project project) {
-		context.persist(project);
+		em.persist(project);
 	}
 
 	public void remove(Project project) {
-		context.remove(project);
+		em.remove(em.contains(project) ? project : em.merge(project));
 	}
 	
 }

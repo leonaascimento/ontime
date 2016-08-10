@@ -13,28 +13,28 @@ import com.ontime.model.Task;
 public class TaskDAO {
 	
 	@PersistenceContext
-	private EntityManager context;
+	private EntityManager em;
 
 	public List<Task> getList() {
 		String criteria = "select t from Task t";
-		return context.createQuery(criteria, Task.class).getResultList();
+		return em.createQuery(criteria, Task.class).getResultList();
 	}
 
 	public Task get(int id) {
 		String criteria = "select t from Task t where t.id = :id";
-		return context.createQuery(criteria, Task.class).setParameter("id", id).getSingleResult();
+		return em.createQuery(criteria, Task.class).setParameter("id", id).getSingleResult();
 	}
 
 	public void add(Task task) {
-		context.persist(task);
+		em.persist(task);
 	}
 
 	public void update(Task task) {
-		context.persist(task);
+		em.persist(task);
 	}
 
 	public void remove(Task task) {
-		context.remove(task);
+		em.remove(em.contains(task) ? task : em.merge(task));
 	}
 	
 }

@@ -13,28 +13,28 @@ import com.ontime.model.Comment;
 public class CommentDAO {
 	
 	@PersistenceContext
-	private EntityManager context;
+	private EntityManager em;
 
 	public List<Comment> getList() {
 		String criteria = "select c from Comment c";
-		return context.createQuery(criteria, Comment.class).getResultList();
+		return em.createQuery(criteria, Comment.class).getResultList();
 	}
 
 	public Comment get(int id) {
 		String criteria = "select c from Comment c where c.id = :id";
-		return context.createQuery(criteria, Comment.class).setParameter("id", id).getSingleResult();
+		return em.createQuery(criteria, Comment.class).setParameter("id", id).getSingleResult();
 	}
 
 	public void add(Comment comment) {
-		context.persist(comment);
+		em.persist(comment);
 	}
 
 	public void update(Comment comment) {
-		context.persist(comment);
+		em.persist(comment);
 	}
 
 	public void remove(Comment comment) {
-		context.remove(comment);
+		em.remove(em.contains(comment) ? comment : em.merge(comment));
 	}
 	
 }

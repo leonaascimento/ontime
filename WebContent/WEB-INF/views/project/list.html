@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:include="shared/layout :: layout">
+
+<head>
+</head>
+
+<body>
+	<div th:fragment="content">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Nome</th>
+					<th>Linguagem</th>
+					<th>Descri&ccedil;&atilde;o</th>
+				</tr>
+			</thead>
+			<th:block th:each="project : ${projects}">
+				<tr>
+					<td th:text="${project.name}"></td>
+					<td th:text="${project.language}"></td>
+					<td th:text="${project.description}"></td>
+				</tr>
+			</th:block>
+		</table>
+	</div>
+</body>
+
+</html>

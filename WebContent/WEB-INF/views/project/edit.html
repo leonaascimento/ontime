@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:include="shared/layout :: layout">
+
+<head>
+</head>
+
+<body>
+    <div class="row" th:fragment="content">
+        <div class="well bs-component">
+            <form method="POST" class="form-horizontal">
+                <fieldset>
+                    <legend>Legend</legend>
+                    <input type="hidden" id="id" name="id" th:value="${project.id}" />
+                    <div class="form-group">
+                        <label for="name" class="col-lg-2 control-label">Nome</label>
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Nome" th:value="${project.name}" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description" class="col-lg-2 control-label">Desri&ccedil;&atilde;o</label>
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control" id="description" name="description" placeholder="Desri&ccedil;&atilde;o" th:value="${project.description}" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="language" class="col-lg-2 control-label">Linguagem</label>
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control" id="language" name="language" placeholder="Linguagem" th:value="${project.language}" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-10 col-lg-offset-2">
+                            <a class="btn btn-default" th:href="@{/projects}">Cancelar</a>
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

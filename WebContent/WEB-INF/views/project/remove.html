@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:include="shared/layout :: layout">
+
+<head>
+</head>
+
+<body>
+    <div class="row" th:fragment="content">
+        <form method="POST" class="form-horizontal">
+            <h2 th:text="${project.name}"></h2>
+            <dl class="dl-horizontal">
+                <dt>Nome</dt>
+                <dd th:text="${project.name}"></dd>
+                <dt>Descri&ccedil;&atilde;o</dt>
+                <dd th:text="${project.description}"></dd>
+                <dt>Linguagem</dt>
+                <dd th:text="${project.language}"></dd>
+            </dl>
+            <div class="form-group">
+                <input type="hidden" id="id" name="id" th:value="${project.id}" />
+                <div class="col-lg-10 col-lg-offset-2">
+                    <a class="btn btn-default" th:href="@{/projects}">Cancelar</a>
+                    <button type="submit" class="btn btn-primary">Remover</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

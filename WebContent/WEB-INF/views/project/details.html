@@ -15,6 +15,19 @@
 			<dt>Linguagem</dt>
 			<dd th:text="${project.language}"></dd>
 		</dl>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>T&iacute;tulo</th>
+					<th>Descri&ccedil;&atilde;o</th>
+				</tr>
+			</thead>
+				<tr>
+					<td th:text="${task.title}"></td>
+					<td th:text="${task.description}"></td>
+				</tr>
+			</th:block>
+		</table>
 		<a class="btn btn-default" th:href="@{/projects}">Voltar</a>
 	</div>
 </body>

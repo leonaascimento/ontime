@@ -15,23 +15,23 @@ import com.ontime.service.ProjectService;
 @Controller
 public class ProjectController {
 
-	private ProjectService projectService;
+	private ProjectService service;
 
 	@Autowired
 	public ProjectController(ProjectService service) {
-		this.projectService = service;
+		this.service = service;
 	}
 	
 	@RequestMapping(value = "projects", method = RequestMethod.GET)
 	public String list(Model model) {
-		List<Project> projects = projectService.getList();
+		List<Project> projects = service.getList();
 		model.addAttribute("projects", projects);
 		return "project/list";
 	}
 	
 	@RequestMapping(value = "projects/details", method = RequestMethod.GET)
 	public String details(@RequestParam final int id, Model model) {
-		Project project = projectService.get(id);
+		Project project = service.get(id);
 		model.addAttribute(project);
 		return "project/details";
 	}
@@ -43,33 +43,33 @@ public class ProjectController {
 	
 	@RequestMapping(value = "projects/create", method = RequestMethod.POST)
 	public String create(Project project, Model model) {
-		projectService.add(project);
+		service.add(project);
 		return "redirect:/projects";
 	}
 	
 	@RequestMapping(value = "projects/edit", method = RequestMethod.GET)
 	public String edit(@RequestParam final int id, Model model) {
-		Project project = projectService.get(id);
+		Project project = service.get(id);
 		model.addAttribute(project);
 		return "project/edit";
 	}
 	
 	@RequestMapping(value = "projects/edit", method = RequestMethod.POST)
 	public String edit(Project project, Model model) {
-		projectService.update(project);
+		service.update(project);
 		return "redirect:/projects";
 	}
 	
 	@RequestMapping(value = "projects/remove", method = RequestMethod.GET)
 	public String remove(@RequestParam final int id, Model model) {
-		Project project = projectService.get(id);
+		Project project = service.get(id);
 		model.addAttribute(project);
 		return "project/edit";
 	}
 	
 	@RequestMapping(value = "projects/remove", method = RequestMethod.POST)
 	public String remove(Project project, Model model) {
-		projectService.remove(project);
+		service.remove(project);
 		return "redirect:/projects";
 	}
 	

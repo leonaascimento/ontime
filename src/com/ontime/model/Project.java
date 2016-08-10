@@ -1,13 +1,17 @@
 package com.ontime.model;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -22,6 +26,7 @@ public class Project {
 	private String tags;
 	private Date createdAt;
 	private User owner;
+	private List<Task> tasks;
 
 	@Id
 	@GeneratedValue
@@ -96,6 +101,15 @@ public class Project {
 
 	public void setOwner(User owner) {
 		this.owner = owner;
+	}
+
+	@OneToMany(mappedBy="project", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	public List<Task> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(List<Task> tasks) {
+		this.tasks = tasks;
 	}
 	
 }

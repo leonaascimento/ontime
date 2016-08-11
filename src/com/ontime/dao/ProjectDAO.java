@@ -21,7 +21,7 @@ public class ProjectDAO {
 	}
 
 	public Project get(int id) {
-		String criteria = "select p from Project p join fetch p.tasks where p.id = :id";
+		String criteria = "select p from Project p left join fetch p.tasks where p.id = :id";
 		return em.createQuery(criteria, Project.class).setParameter("id", id).getSingleResult();
 	}
 
@@ -30,7 +30,7 @@ public class ProjectDAO {
 	}
 
 	public void update(Project project) {
-		em.persist(project);
+		em.persist(em.contains(project) ? project : em.merge(project));
 	}
 
 	public void remove(Project project) {

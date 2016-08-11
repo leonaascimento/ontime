@@ -30,7 +30,7 @@ public class ActionDAO {
 	}
 
 	public void update(Action action) {
-		em.persist(action);
+		em.persist(em.contains(action) ? action : em.merge(action));
 	}
 
 	public void remove(Action action) {

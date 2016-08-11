@@ -30,7 +30,7 @@ public class TaskDAO {
 	}
 
 	public void update(Task task) {
-		em.persist(task);
+		em.persist(em.contains(task) ? task : em.merge(task));
 	}
 
 	public void remove(Task task) {

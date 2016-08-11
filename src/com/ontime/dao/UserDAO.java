@@ -35,7 +35,7 @@ public class UserDAO {
 	}
 
 	public void update(User user) {
-		em.persist(user);
+		em.persist(em.contains(user) ? user : em.merge(user));
 	}
 
 	public void remove(User user) {

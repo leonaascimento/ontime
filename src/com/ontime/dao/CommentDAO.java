@@ -30,7 +30,7 @@ public class CommentDAO {
 	}
 
 	public void update(Comment comment) {
-		em.persist(comment);
+		em.persist(em.contains(comment) ? comment : em.merge(comment));
 	}
 
 	public void remove(Comment comment) {

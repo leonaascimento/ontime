@@ -1,5 +1,6 @@
 package com.ontime.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -8,11 +9,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name = "projects")
@@ -25,11 +29,15 @@ public class Project {
 	private String language;
 	private String tags;
 	private Date createdAt;
-	private User owner;
+	private User createdBy;
 	private List<Task> tasks;
+	
+	public Project() {
+		this.tasks = new ArrayList<Task>();
+	}
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	public Integer getId() {
 		return id;
@@ -39,7 +47,8 @@ public class Project {
 		this.id = id;
 	}
 
-	@Column(name = "name")
+	@NotBlank
+	@Column(name = "name", nullable = false)
 	public String getName() {
 		return name;
 	}
@@ -84,7 +93,7 @@ public class Project {
 		this.tags = tags;
 	}
 
-	@Column(name = "created_at")
+	@Column(name = "created_at", nullable = false, updatable = false)
 	public Date getCreatedAt() {
 		return createdAt;
 	}
@@ -93,17 +102,17 @@ public class Project {
 		this.createdAt = createdAt;
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "owner_id")
-	public User getOwner() {
-		return owner;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "created_by_id", nullable = false, updatable = false)
+	public User getCreatedBy() {
+		return createdBy;
 	}
 
-	public void setOwner(User owner) {
-		this.owner = owner;
+	public void setCreatedBy(User createdBy) {
+		this.createdBy = createdBy;
 	}
 
-	@OneToMany(mappedBy="project", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="project", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	public List<Task> getTasks() {
 		return tasks;
 	}

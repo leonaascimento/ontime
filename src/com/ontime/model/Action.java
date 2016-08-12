@@ -4,11 +4,16 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name = "actions")
@@ -21,9 +26,10 @@ public class Action {
 	private Date createdAt;
 	private User doneBy;
 	private User createdBy;
+	private Task task;
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	public Integer getId() {
 		return id;
@@ -33,7 +39,8 @@ public class Action {
 		this.id = id;
 	}
 
-	@Column(name = "description")
+	@NotBlank
+	@Column(name = "description", nullable = false)
 	public String getDescription() {
 		return description;
 	}
@@ -42,7 +49,8 @@ public class Action {
 		this.description = description;
 	}
 
-	@Column(name = "done")
+	@NotNull
+	@Column(name = "done", nullable = false)
 	public Boolean getDone() {
 		return done;
 	}
@@ -60,7 +68,7 @@ public class Action {
 		this.doneAt = doneAt;
 	}
 
-	@Column(name = "created_at")
+	@Column(name = "created_at", nullable = false, updatable = false)
 	public Date getCreatedAt() {
 		return createdAt;
 	}
@@ -69,7 +77,7 @@ public class Action {
 		this.createdAt = createdAt;
 	}
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "done_by_id")
 	public User getDoneBy() {
 		return doneBy;
@@ -79,7 +87,7 @@ public class Action {
 		this.doneBy = doneBy;
 	}
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "created_by_id")
 	public User getCreatedBy() {
 		return createdBy;
@@ -87,6 +95,16 @@ public class Action {
 
 	public void setCreatedBy(User createdBy) {
 		this.createdBy = createdBy;
+	}
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "task_id")
+	public Task getTask() {
+		return task;
+	}
+
+	public void setTask(Task task) {
+		this.task = task;
 	}
 	
 }

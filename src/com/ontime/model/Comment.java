@@ -4,11 +4,15 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name = "comments")
@@ -18,9 +22,10 @@ public class Comment {
 	private String content;
 	private Date createdAt;
 	private User createdBy;
+	private Task task;
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	public Integer getId() {
 		return id;
@@ -29,8 +34,9 @@ public class Comment {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-	@Column(name = "content")
+	
+	@NotBlank
+	@Column(name = "content", nullable = false)
 	public String getContent() {
 		return content;
 	}
@@ -39,7 +45,7 @@ public class Comment {
 		this.content = content;
 	}
 
-	@Column(name = "created_at")
+	@Column(name = "created_at", nullable = false, updatable = false)
 	public Date getCreatedAt() {
 		return createdAt;
 	}
@@ -47,9 +53,9 @@ public class Comment {
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
-
-	@ManyToOne
-	@JoinColumn(name = "created_by_id")
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "created_by_id", nullable = false, updatable = false)
 	public User getCreatedBy() {
 		return createdBy;
 	}
@@ -58,4 +64,14 @@ public class Comment {
 		this.createdBy = createdBy;
 	}
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "task_id")
+	public Task getTask() {
+		return task;
+	}
+
+	public void setTask(Task task) {
+		this.task = task;
+	}
+
 }

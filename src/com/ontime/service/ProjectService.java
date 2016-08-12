@@ -1,6 +1,7 @@
 package com.ontime.service;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,13 +10,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ontime.dao.ProjectDAO;
 import com.ontime.model.Project;
+import com.ontime.model.Status;
+import com.ontime.model.Task;
 import com.ontime.util.CurrentUser;
 
 @Service
 public class ProjectService {
 	
-	private CurrentUser currentUser;
 	private ProjectDAO dao;
+	private CurrentUser currentUser;
 
 	@Autowired
 	public ProjectService(ProjectDAO dao, CurrentUser currentUser) {
@@ -33,8 +36,19 @@ public class ProjectService {
 	
 	@Transactional
 	public void add(Project project) {
-		project.setCreatedAt(Calendar.getInstance().getTime());
-		project.setOwner(currentUser.getUser());
+		Date now = Calendar.getInstance().getTime();
+		
+		Task task = new Task();
+		task.setTitle("__META__");
+		task.setStatus(Status.NEW);
+		task.setCreatedBy(currentUser.getUser());
+		task.setCreatedAt(now);
+		task.setProject(project);
+		
+		project.setCreatedAt(now);
+		project.setCreatedBy(currentUser.getUser());
+		project.getTasks().add(task);
+		
 		dao.add(project);
 	}
 	
@@ -44,7 +58,9 @@ public class ProjectService {
 	}
 	
 	@Transactional
-	public void remove(Project project) {
+	public void remove(int id) {
+		Project project = new Project();
+		project.setId(id);
 		dao.remove(project);
 	}
 	

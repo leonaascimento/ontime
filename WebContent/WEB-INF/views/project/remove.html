@@ -6,21 +6,21 @@
 
 <body>
     <div class="row" th:fragment="content">
-        <form method="POST" class="form-horizontal">
-            <h2 th:text="${project.name}"></h2>
-            <dl class="dl-horizontal">
-                <dt>Nome</dt>
-                <dd th:text="${project.name}"></dd>
-                <dt>Descri&ccedil;&atilde;o</dt>
-                <dd th:text="${project.description}"></dd>
-                <dt>Linguagem</dt>
-                <dd th:text="${project.language}"></dd>
-            </dl>
+        <h2 th:text="${project.name}"></h2>
+        <dl class="dl-horizontal" th:object="${project}">
+            <dt>Nome</dt>
+            <dd th:text="${name}"></dd>
+            <dt>Descri&ccedil;&atilde;o</dt>
+            <dd th:text="${description}"></dd>
+            <dt>Linguagem</dt>
+            <dd th:text="${language}"></dd>
+        </dl>
+        <form class="form-horizontal" th:action="@{/projects/remove(id=${project.id})}" method="POST" th:object="${project}">
             <div class="form-group">
-                <input type="hidden" id="id" name="id" th:value="${project.id}" />
+                <input type="hidden" th:field="*{id}" />
                 <div class="col-lg-10 col-lg-offset-2">
                     <a class="btn btn-default" th:href="@{/projects}">Cancelar</a>
-                    <button type="submit" class="btn btn-primary">Remover</button>
+                    <button type="submit" class="btn btn-danger">Remover</button>
                 </div>
             </div>
         </form>

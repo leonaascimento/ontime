@@ -2,9 +2,12 @@ package com.ontime.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,12 +40,18 @@ public class ProjectController {
 	}
 	
 	@RequestMapping(value = "projects/create", method = RequestMethod.GET)
-	public String create() {
+	public String create(Model model) {
+		Project project = new Project();
+		model.addAttribute(project);
 		return "project/create";
 	}
 	
 	@RequestMapping(value = "projects/create", method = RequestMethod.POST)
-	public String create(Project project, Model model) {
+	public String create(@Valid Project project, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			return "project/create";
+		}
+		
 		service.add(project);
 		return "redirect:/projects";
 	}
@@ -55,7 +64,11 @@ public class ProjectController {
 	}
 	
 	@RequestMapping(value = "projects/edit", method = RequestMethod.POST)
-	public String edit(Project project, Model model) {
+	public String edit(@Valid Project project, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			return "project/edit";
+		}
+		
 		service.update(project);
 		return "redirect:/projects";
 	}
@@ -64,12 +77,12 @@ public class ProjectController {
 	public String remove(@RequestParam final int id, Model model) {
 		Project project = service.get(id);
 		model.addAttribute(project);
-		return "project/edit";
+		return "project/remove";
 	}
 	
 	@RequestMapping(value = "projects/remove", method = RequestMethod.POST)
-	public String remove(Project project, Model model) {
-		service.remove(project);
+	public String remove(@RequestParam final int id) {
+		service.remove(id);
 		return "redirect:/projects";
 	}
 	

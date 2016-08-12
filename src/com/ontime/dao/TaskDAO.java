@@ -1,7 +1,5 @@
 package com.ontime.dao;
 
-import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -14,11 +12,6 @@ public class TaskDAO {
 	
 	@PersistenceContext
 	private EntityManager em;
-
-	public List<Task> getList() {
-		String criteria = "select t from Task t";
-		return em.createQuery(criteria, Task.class).getResultList();
-	}
 
 	public Task get(int id) {
 		String criteria = "select t from Task t where t.id = :id";

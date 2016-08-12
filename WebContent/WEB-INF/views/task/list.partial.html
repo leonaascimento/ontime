@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+</head>
+
+<body>
+	<div th:fragment="content">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>T&iacute;tulo</th>
+					<th>Descri&ccedil;&atilde;o</th>
+				</tr>
+			</thead>
+			<th:block th:each="task : ${project.tasks}">
+				<tr>
+					<td th:text="${task.title}"></td>
+					<td th:text="${task.description}"></td>
+				</tr>
+			</th:block>
+		</table>
+	</div>
+</body>
+
+</html>

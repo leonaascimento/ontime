@@ -41,6 +41,11 @@ public class Task {
 		this.comments = new ArrayList<Comment>();
 	}
 	
+	public Task(int id) {
+		this();
+		this.setId(id);
+	}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")

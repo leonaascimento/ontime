@@ -35,6 +35,11 @@ public class Project {
 	public Project() {
 		this.tasks = new ArrayList<Task>();
 	}
+	
+	public Project(int id) {
+		this();
+		this.setId(id);
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

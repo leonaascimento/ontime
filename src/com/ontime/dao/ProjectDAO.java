@@ -8,7 +8,6 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
 import com.ontime.model.Project;
-import com.ontime.model.Task;
 
 @Repository
 public class ProjectDAO {
@@ -22,20 +21,8 @@ public class ProjectDAO {
 	}
 
 	public Project get(int id) {
-		String projectCriteria = "select p from Project p where p.id = :id";
-		Project project = em.createQuery(projectCriteria, Project.class)
-				.setParameter("id", id)
-				.getSingleResult();
-		
-		String tasksCriteria = "select t from Task t where t.project.id = :projectId and t.title != :title";
-		List<Task> tasks = em.createQuery(tasksCriteria, Task.class)
-				.setParameter("projectId", id)
-				.setParameter("title", "__META__")
-				.getResultList();
-		
-		project.setTasks(tasks);
-		
-		return project;
+		String criteria = "select p from Project p where p.id = :id";
+		return em.createQuery(criteria, Project.class).setParameter("id", id).getSingleResult();
 	}
 
 	public void add(Project project) {

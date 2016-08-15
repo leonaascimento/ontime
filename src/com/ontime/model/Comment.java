@@ -23,6 +23,15 @@ public class Comment {
 	private Date createdAt;
 	private User createdBy;
 	private Task task;
+	
+	public Comment() {
+		
+	}
+	
+	public Comment(int id) {
+		this();
+		this.setId(id);
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

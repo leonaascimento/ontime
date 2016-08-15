@@ -8,62 +8,49 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ontime.dao.ProjectDAO;
-import com.ontime.model.Project;
-import com.ontime.model.Status;
+import com.ontime.dao.TaskDAO;
 import com.ontime.model.Task;
 import com.ontime.model.User;
 import com.ontime.util.UserLocator;
 
 @Service
-public class ProjectService {
+public class TaskService {
 	
-	private ProjectDAO dao;
+	private TaskDAO dao;
 	private User currentUser;
 
 	@Autowired
-	public ProjectService(ProjectDAO dao, UserLocator userLocator) {
+	public TaskService(TaskDAO dao, UserLocator userLocator) {
 		this.dao = dao;
 		this.currentUser = userLocator.getCurrentUser();
 	}
 	
-	public List<Project> getList() {
-		return dao.getList();
+	public List<Task> getList(int projectId) {
+		return dao.getList(projectId);
 	}
 	
-	public Project get(int id) {
+	public Task get(int id) {
 		return dao.get(id);
 	}
 	
 	@Transactional
-	public void add(Project project) {
+	public void add(Task task) {
 		Date now = Calendar.getInstance().getTime();
 		
-		project.setCreatedAt(now);
-		project.setCreatedBy(currentUser);
-		
-		Task task = new Task();
-		task.setTitle("__META__");
-		task.setStatus(Status.NEW);
 		task.setCreatedAt(now);
 		task.setCreatedBy(currentUser);
-		task.setProject(project);
-		
-		project.getTasks().add(task);
-		
-		dao.add(project);
+
+		dao.add(task);
 	}
 	
 	@Transactional
-	public void update(Project project) {
-		dao.update(project);
+	public void update(Task task) {
+		dao.update(task);
 	}
 	
 	@Transactional
 	public void remove(int id) {
-		Project project = new Project();
-		project.setId(id);
-		dao.remove(project);
+		dao.remove(new Task(id));
 	}
-	
+
 }

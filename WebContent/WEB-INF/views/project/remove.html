@@ -7,13 +7,13 @@
 <body>
     <div class="row" th:fragment="content">
         <h2 th:text="${project.name}"></h2>
-        <dl class="dl-horizontal" th:object="${project}">
+        <dl class="dl-horizontal">
             <dt>Nome</dt>
-            <dd th:text="${name}"></dd>
+            <dd th:text="${project.name}"></dd>
             <dt>Descri&ccedil;&atilde;o</dt>
-            <dd th:text="${description}"></dd>
+            <dd th:text="${project.description}"></dd>
             <dt>Linguagem</dt>
-            <dd th:text="${language}"></dd>
+            <dd th:text="${project.language}"></dd>
         </dl>
         <form class="form-horizontal" th:action="@{/projects/remove(id=${project.id})}" method="POST" th:object="${project}">
             <div class="form-group">

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:include="shared/layout :: layout">
+
+<head>
+</head>
+
+<body>
+	<div th:fragment="content">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Conte&uacute;do</th>
+				</tr>
+			</thead>
+			<th:block th:each="comment : ${comments}">
+				<tr>
+					<td th:text="${comment.content}"></td>
+				</tr>
+			</th:block>
+		</table>
+	</div>
+	<script type="text/javascript" th:fragment="script">
+		var pusher = new Pusher('1903bfdf2d61093ea14d');
+		var channel = pusher.subscribe('channel-one');
+		
+		channel.bind('new_comment', function(data) {
+			  alert('An event was triggered with message: ' + data.content);
+			});
+		
+	</script>
+</body>
+
+</html>

@@ -15,9 +15,9 @@ public class CommentDAO {
 	@PersistenceContext
 	private EntityManager em;
 
-	public List<Comment> getList() {
-		String criteria = "select c from Comment c";
-		return em.createQuery(criteria, Comment.class).getResultList();
+	public List<Comment> getList(int taskId) {
+		String criteria = "select c from Comment c where c.task.id = :taskId";
+		return em.createQuery(criteria, Comment.class).setParameter("taskId", taskId).getResultList();
 	}
 
 	public Comment get(int id) {

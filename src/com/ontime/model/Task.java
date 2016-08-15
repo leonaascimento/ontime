@@ -34,7 +34,6 @@ public class Task {
 	private User assignedTo;
 	private User closedBy;
 	private Project project;
-	private List<Action> actions;
 	private List<Comment> comments;
 
 	public Task() {
@@ -143,15 +142,6 @@ public class Task {
 
 	public void setProject(Project project) {
 		this.project = project;
-	}
-	
-	@OneToMany(mappedBy="task", fetch = FetchType.LAZY, orphanRemoval = true)
-	public List<Action> getActions() {
-		return actions;
-	}
-
-	public void setActions(List<Action> actions) {
-		this.actions = actions;
 	}
 	
 	@OneToMany(mappedBy="task", fetch = FetchType.LAZY, orphanRemoval = true)

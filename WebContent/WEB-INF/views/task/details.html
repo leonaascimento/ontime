@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:include="shared/layout :: layout">
+
+<head>
+</head>
+
+<body>
+	<div th:fragment="content">
+		<h2 th:text="${task.title}"></h2>
+		<dl class="dl-horizontal">
+			<dt>T&iacute;tulo</dt>
+			<dd th:text="${task.title}"></dd>
+			<dt>Descri&ccedil;&atilde;o</dt>
+			<dd th:text="${task.description}"></dd>
+		</dl>
+		<a class="btn btn-default" th:href="@{/projects/{projectId}/tasks(projectId=${projectId})}">Voltar</a>
+	</div>
+</body>
+
+</html>

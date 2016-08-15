@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ontime.dao.CommentDAO;
 import com.ontime.model.Comment;
+import com.ontime.model.Task;
 import com.ontime.model.User;
 import com.ontime.util.UserLocator;
 
@@ -41,6 +42,12 @@ public class CommentService {
 		comment.setCreatedBy(currentUser);
 		
 		dao.add(comment);
+	}
+	
+	@Transactional
+	public void add(Comment comment, int taskId) {
+		comment.setTask(new Task(taskId));
+		this.add(comment);
 	}
 	
 	@Transactional

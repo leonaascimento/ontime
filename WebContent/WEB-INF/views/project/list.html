@@ -23,11 +23,13 @@
 					<td th:text="${project.description}"></td>
 					<td>
 						<div class="btn-group">
-							<a th:href="@{/projects/details(id=${project.id})}" class="btn btn-default btn-sm">Abrir</a>
+							<a th:href="@{/projects/{projectId}/tasks(projectId=${project.id})}" class="btn btn-default btn-sm">Abrir</a>
 							<a href="#" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
 							<ul class="dropdown-menu">
-								<li><a th:href="@{/projects/edit(id=${project.id})}">Editar</a></li>
-								<li><a th:href="@{/projects/remove(id=${project.id})}">Remover</a></li>
+								<li><a th:href="@{/projects/{projectId}(projectId=${project.id})}">Detalhes</a></li>
+								<li><a th:href="@{/projects/{projectId}/edit(projectId=${project.id})}">Editar</a></li>
+								<li class="divider"></li>
+								<li><a th:href="@{/projects/{projectId}/remove(projectId=${project.id})}">Remover</a></li>
 							</ul>
 						</div>
 					</td>

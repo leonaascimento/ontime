@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ontime.model.Project;
 import com.ontime.service.ProjectService;
@@ -32,9 +32,9 @@ public class ProjectController {
 		return "project/list";
 	}
 	
-	@RequestMapping(value = "projects/details", method = RequestMethod.GET)
-	public String details(@RequestParam final int id, Model model) {
-		Project project = service.get(id);
+	@RequestMapping(value = "projects/{projectId}", method = RequestMethod.GET)
+	public String details(@PathVariable final int projectId, Model model) {
+		Project project = service.get(projectId);
 		model.addAttribute(project);
 		return "project/details";
 	}
@@ -56,15 +56,15 @@ public class ProjectController {
 		return "redirect:/projects";
 	}
 	
-	@RequestMapping(value = "projects/edit", method = RequestMethod.GET)
-	public String edit(@RequestParam final int id, Model model) {
-		Project project = service.get(id);
+	@RequestMapping(value = "projects/{projectId}/edit", method = RequestMethod.GET)
+	public String edit(@PathVariable final int projectId, Model model) {
+		Project project = service.get(projectId);
 		model.addAttribute(project);
 		return "project/edit";
 	}
 	
-	@RequestMapping(value = "projects/edit", method = RequestMethod.POST)
-	public String edit(@Valid Project project, BindingResult result, Model model) {
+	@RequestMapping(value = "projects/{projectId}/edit", method = RequestMethod.POST)
+	public String edit(@PathVariable final int projectId, @Valid Project project, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return "project/edit";
 		}
@@ -73,16 +73,16 @@ public class ProjectController {
 		return "redirect:/projects";
 	}
 	
-	@RequestMapping(value = "projects/remove", method = RequestMethod.GET)
-	public String remove(@RequestParam final int id, Model model) {
-		Project project = service.get(id);
+	@RequestMapping(value = "projects/{projectId}/remove", method = RequestMethod.GET)
+	public String remove(@PathVariable final int projectId, Model model) {
+		Project project = service.get(projectId);
 		model.addAttribute(project);
 		return "project/remove";
 	}
 	
-	@RequestMapping(value = "projects/remove", method = RequestMethod.POST)
-	public String remove(@RequestParam final int id) {
-		service.remove(id);
+	@RequestMapping(value = "projects/{projectId}/remove", method = RequestMethod.POST)
+	public String remove(@PathVariable final int projectId) {
+		service.remove(projectId);
 		return "redirect:/projects";
 	}
 	

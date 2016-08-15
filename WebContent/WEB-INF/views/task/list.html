@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:include="shared/layout :: layout">
+
+<head>
+</head>
+
+<body>
+	<div th:fragment="content">
+		<a th:href="@{/projects/{projectId}/tasks/create(projectId=${projectId})}" class="btn btn-primary">Adicionar Tarefa</a>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>T&iacute;tulo</th>
+					<th>Descri&ccedil;&atilde;o</th>
+					<th></th>
+				</tr>
+			</thead>
+			<th:block th:each="task : ${tasks}">
+				<tr>
+					<td th:text="${task.title}"></td>
+					<td th:text="${task.description}"></td>
+					<td>
+						<div class="btn-group">
+							<a th:href="@{/projects/{projectId}/tasks/{taskId}(projectId=${projectId},taskId=${task.id})}" class="btn btn-default btn-sm">Abrir</a>
+							<a href="#" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a th:href="@{/projects/{projectId}/tasks/{taskId}(projectId=${projectId},taskId=${task.id})}">Detalhes</a></li>
+								<li><a th:href="@{/projects/{projectId}/tasks/{taskId}/edit(projectId=${projectId},taskId=${task.id})}">Editar</a></li>
+								<li class="divider"></li>
+								<li><a th:href="@{/projects/{projectId}/tasks/{taskId}/remove(projectId=${projectId},taskId=${task.id})}">Remover</a></li>
+							</ul>
+						</div>
+					</td>
+				</tr>
+			</th:block>
+		</table>
+	</div>
+</body>
+
+</html>

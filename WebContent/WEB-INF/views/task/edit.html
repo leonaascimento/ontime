@@ -10,6 +10,7 @@
             <form class="form-horizontal" method="POST" th:object="${task}">
                 <fieldset>
                     <legend>Tarefa</legend>
+                    <input type="hidden" th:field="*{id}" />
                     <div class="form-group" th:classappend="${#fields.hasErrors('title')}? has-error">
                         <label for="title" class="col-md-2 control-label">T&iacute;tulo</label>
                         <div class="col-md-10">

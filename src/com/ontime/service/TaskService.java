@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ontime.dao.TaskDAO;
+import com.ontime.model.Project;
+import com.ontime.model.Status;
 import com.ontime.model.Task;
 import com.ontime.model.User;
 import com.ontime.util.UserLocator;
@@ -37,6 +39,14 @@ public class TaskService {
 	public void add(Task task) {
 		Date now = Calendar.getInstance().getTime();
 		
+		if (task.getAssignedTo() != null && task.getAssignedTo().getId() == null)
+			task.setAssignedTo(null);
+		
+		if (task.getStatus() == Status.CLOSED) {
+			task.setClosedAt(now);
+			task.setClosedBy(currentUser);
+		}
+		
 		task.setCreatedAt(now);
 		task.setCreatedBy(currentUser);
 
@@ -44,7 +54,27 @@ public class TaskService {
 	}
 	
 	@Transactional
+	public void add(Task task, int projectId) {
+		task.setProject(new Project(projectId));
+		this.add(task);
+	}
+	
+	@Transactional
 	public void update(Task task) {
+		Date now = Calendar.getInstance().getTime();
+		
+		if (task.getAssignedTo() != null && task.getAssignedTo().getId() == null)
+			task.setAssignedTo(null);
+		
+		if (task.getStatus() == Status.CLOSED) {
+			Task then = dao.get(task.getId());
+			
+			if (task.getStatus() != then.getStatus()) {
+				task.setClosedAt(now);
+				task.setClosedBy(currentUser);
+			}
+		}
+		
 		dao.update(task);
 	}
 	

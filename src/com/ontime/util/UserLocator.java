@@ -1,6 +1,5 @@
 package com.ontime.util;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -16,30 +15,19 @@ public class UserLocator {
 	
 	public final String USER_SESSION_KEY = "SESSION_USER_KEY";
 	
-	private User currentUser;
 	private HttpSession session;
 	
 	@Autowired
-	public UserLocator(HttpServletRequest req) {
-		this.session = req.getSession();
+	public UserLocator(HttpSession session) {
+		this.session = session;
 	}
 	
 	public User getCurrentUser() {
-		/*
-		if (user == null) {
-			user = (User) session.getAttribute(USER_SESSION_KEY);
-		}
-		*/
-		
-		currentUser = new User();
-		currentUser.setId(1);
-		currentUser.setEmail("leonardo@ontime.com");
-		
-		return currentUser;
+		return (User) session.getAttribute(USER_SESSION_KEY);
 	}
 	
-	public void setCurrentUser(User user) {
-		session.setAttribute(USER_SESSION_KEY, user);
+	public void setCurrentUser(User currentUser) {
+		session.setAttribute(USER_SESSION_KEY, currentUser);
 	}
 
 }

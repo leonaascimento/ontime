@@ -16,6 +16,9 @@
 			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
 		</mvc:message-converters>
 	</mvc:annotation-driven>
+	<mvc:interceptors>
+		<bean class="com.ontime.interceptor.AuthorizationInterceptor" />
+	</mvc:interceptors>
 	
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 	

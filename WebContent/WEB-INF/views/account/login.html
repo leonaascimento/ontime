@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:include="account/layout :: layout">
+
+<head>
+</head>
+
+<body>
+	<div th:fragment="content">
+		<div class="row">
+			<div class="col-md-4 col-md-offset-4 col-centered">
+				<div class="row text-center">
+					<p style="font-size: 35px">ontime</p>
+					<p style="font-size: 20px">Fazer login para prosseguir</p>
+				</div>
+				<div class="panel panel-default no-margin margin-top" style="margin-top: 10px">
+					<div class="panel-body">
+						<form class="form-horizontal" th:action="@{/account/login}" method="POST" th:object="${login}">
+							<p style="color: red" th:text="${message}"></p>
+							<div class="form-group">
+								<div class="col-md-12">
+									<label for="email" class="control-label">E-mail</label>
+									<input type="text" class="form-control" th:field="*{email}" />
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-12">
+									<label for="password" class="control-label">Senha</label>
+									<input type="password" class="form-control" th:field="*{password}" />
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-12">
+									<input type="submit" value="Entrar" class="btn btn-primary" style="width: 100%" />
+								</div>
+							</div>
+						</form>
+						<div class="text-center">
+							<a th:href="@{/account/register}">Criar uma conta</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

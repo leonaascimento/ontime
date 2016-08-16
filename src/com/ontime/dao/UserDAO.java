@@ -29,6 +29,11 @@ public class UserDAO {
 		String criteria = "select u from User u where u.email = :email";
 		return em.createQuery(criteria, User.class).setParameter("email", email).getSingleResult();
 	}
+	
+	public Boolean exists(String email) {
+		String criteria = "select u from User u where u.email = :email";
+		return em.createQuery(criteria).setParameter("email", email).getResultList().size() > 0;
+	}
 
 	public void add(User user) {
 		em.persist(user);

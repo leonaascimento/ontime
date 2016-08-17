@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ontime.service.UserService;
-import com.ontime.viewmodel.UserSummaryView;
+import com.ontime.viewmodel.UserSummaryViewModel;
 
 @Controller
 public class UserController {
@@ -26,8 +26,15 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value = "users", method = RequestMethod.GET)
 	public ResponseEntity<?> list() {
-		List<UserSummaryView> users = service.getSummaryList();
+		List<UserSummaryViewModel> users = service.getSummaryList();
 		return new ResponseEntity<>(users, HttpStatus.OK);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "users/myself", method = RequestMethod.GET)
+	public ResponseEntity<?> myself() {
+		UserSummaryViewModel user = service.getMyself();
+		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 
 }

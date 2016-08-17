@@ -1,5 +1,5 @@
 package com.ontime.model;
 
-public enum Status {
+public enum TaskStatus {
 	NEW, OPEN, CLOSED
 }

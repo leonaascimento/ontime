@@ -17,21 +17,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ontime.model.Comment;
 import com.ontime.service.CommentService;
-import com.pusher.rest.Pusher;
 
 @Controller
 public class CommentController {
 
 	private CommentService service;
-	private Pusher pusher;
-	private final String appId = "237083";
-	private final String apiKey = "1903bfdf2d61093ea14d";
-	private final String apiSecret = "f7a3becb1b5393e391df";
 
 	@Autowired
 	public CommentController(CommentService service) {
 		this.service = service;
-		pusher = new Pusher(appId, apiKey, apiSecret);
 	}
 
 	@RequestMapping(value = "projects/{projectId}/tasks/{taskId}/comments", method = RequestMethod.GET)
@@ -50,8 +44,6 @@ public class CommentController {
 		}
 
 		service.add(comment, taskId);
-
-		pusher.trigger("channel-one", "new_comment", comment);
 
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}

@@ -27,7 +27,7 @@ public class Task {
 	private Integer id;
 	private String title;
 	private String description;
-	private Status status;
+	private TaskStatus status;
 	private Date createdAt;
 	private Date closedAt;
 	private User createdBy;
@@ -78,11 +78,11 @@ public class Task {
 	@NotNull
 	@Column(name = "status", nullable = false)
 	@Enumerated(EnumType.STRING)
-	public Status getStatus() {
+	public TaskStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(Status status) {
+	public void setStatus(TaskStatus status) {
 		this.status = status;
 	}
 

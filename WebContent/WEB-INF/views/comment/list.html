@@ -34,7 +34,7 @@
 	</div>
 	<script type="text/javascript" th:fragment="script">
 		var pusher = new Pusher('1903bfdf2d61093ea14d');
-		var channel = pusher.subscribe('channel-one');
+		var channel = pusher.subscribe('comments-channel');
 
 		channel.bind('new_comment', function(data) {
 			$('.table > tbody:last-child').append('<tr><td>' + data.content + '</td></tr>');

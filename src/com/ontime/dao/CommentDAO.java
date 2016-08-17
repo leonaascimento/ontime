@@ -21,7 +21,7 @@ public class CommentDAO {
 	}
 
 	public Comment get(int id) {
-		String criteria = "select c from Comment c where c.id = :id";
+		String criteria = "select c from Comment c join fetch c.createdBy where c.id = :id";
 		return em.createQuery(criteria, Comment.class).setParameter("id", id).getSingleResult();
 	}
 

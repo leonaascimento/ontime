@@ -1,20 +1,29 @@
 package com.ontime.viewmodel;
 
-public class UserSummaryView {
+import com.ontime.model.User;
+
+public class UserSummaryViewModel {
 
 	private Integer id;
 	private String name;
 	private String email;
 	
-	public UserSummaryView() {
+	public UserSummaryViewModel() {
 		
 	}
 	
-	public UserSummaryView(Integer id, String name, String email) {
+	public UserSummaryViewModel(Integer id, String name, String email) {
 		this();
 		this.setId(id);
 		this.setName(name);
 		this.setEmail(email);
+	}
+	
+	public UserSummaryViewModel(User user) {
+		this();
+		this.setId(user.getId());
+		this.setName(user.getName());
+		this.setEmail(user.getEmail());
 	}
 
 	public Integer getId() {

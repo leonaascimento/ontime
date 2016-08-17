@@ -10,21 +10,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ontime.dao.ProjectDAO;
 import com.ontime.model.Project;
-import com.ontime.model.Status;
-import com.ontime.model.Task;
-import com.ontime.model.User;
 import com.ontime.util.UserLocator;
 
 @Service
 public class ProjectService {
 	
 	private ProjectDAO dao;
-	private User currentUser;
+	private UserLocator userLocator;
 
 	@Autowired
 	public ProjectService(ProjectDAO dao, UserLocator userLocator) {
 		this.dao = dao;
-		this.currentUser = userLocator.getCurrentUser();
+		this.userLocator = userLocator;
 	}
 	
 	public List<Project> getList() {
@@ -40,16 +37,7 @@ public class ProjectService {
 		Date now = Calendar.getInstance().getTime();
 		
 		project.setCreatedAt(now);
-		project.setCreatedBy(currentUser);
-		
-		Task task = new Task();
-		task.setTitle("__META__");
-		task.setStatus(Status.NEW);
-		task.setCreatedAt(now);
-		task.setCreatedBy(currentUser);
-		task.setProject(project);
-		
-		project.getTasks().add(task);
+		project.setCreatedBy(userLocator.getCurrentUser());
 		
 		dao.add(project);
 	}

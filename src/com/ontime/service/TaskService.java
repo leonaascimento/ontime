@@ -10,21 +10,20 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ontime.dao.TaskDAO;
 import com.ontime.model.Project;
-import com.ontime.model.Status;
+import com.ontime.model.TaskStatus;
 import com.ontime.model.Task;
-import com.ontime.model.User;
 import com.ontime.util.UserLocator;
 
 @Service
 public class TaskService {
 	
 	private TaskDAO dao;
-	private User currentUser;
+	private UserLocator userLocator;
 
 	@Autowired
 	public TaskService(TaskDAO dao, UserLocator userLocator) {
 		this.dao = dao;
-		this.currentUser = userLocator.getCurrentUser();
+		this.userLocator = userLocator;
 	}
 	
 	public List<Task> getList(int projectId) {
@@ -42,13 +41,13 @@ public class TaskService {
 		if (task.getAssignedTo() != null && task.getAssignedTo().getId() == null)
 			task.setAssignedTo(null);
 		
-		if (task.getStatus() == Status.CLOSED) {
+		if (task.getStatus() == TaskStatus.CLOSED) {
 			task.setClosedAt(now);
-			task.setClosedBy(currentUser);
+			task.setClosedBy(userLocator.getCurrentUser());
 		}
 		
 		task.setCreatedAt(now);
-		task.setCreatedBy(currentUser);
+		task.setCreatedBy(userLocator.getCurrentUser());
 
 		dao.add(task);
 	}
@@ -66,12 +65,12 @@ public class TaskService {
 		if (task.getAssignedTo() != null && task.getAssignedTo().getId() == null)
 			task.setAssignedTo(null);
 		
-		if (task.getStatus() == Status.CLOSED) {
+		if (task.getStatus() == TaskStatus.CLOSED) {
 			Task then = dao.get(task.getId());
 			
 			if (task.getStatus() != then.getStatus()) {
 				task.setClosedAt(now);
-				task.setClosedBy(currentUser);
+				task.setClosedBy(userLocator.getCurrentUser());
 			}
 		}
 		

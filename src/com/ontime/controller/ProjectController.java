@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ontime.model.Project;
 import com.ontime.service.ProjectService;
@@ -26,8 +27,15 @@ public class ProjectController {
 	}
 	
 	@RequestMapping(value = "projects", method = RequestMethod.GET)
-	public String list(Model model) {
-		List<Project> projects = service.getList();
+	public String list(@RequestParam(required = false) final Integer userId, Model model) {
+		List<Project> projects;
+		
+		if (userId != null) {
+			projects = service.getList(userId);
+		} else {
+			projects = service.getList();
+		}
+		
 		model.addAttribute("projects", projects);
 		return "project/list";
 	}
@@ -47,8 +55,8 @@ public class ProjectController {
 	}
 	
 	@RequestMapping(value = "projects/create", method = RequestMethod.POST)
-	public String create(@Valid Project project, BindingResult result, Model model) {
-		if (result.hasErrors()) {
+	public String create(@Valid Project project, BindingResult bindingResult, Model model) {
+		if (bindingResult.hasErrors()) {
 			return "project/create";
 		}
 		
@@ -64,8 +72,8 @@ public class ProjectController {
 	}
 	
 	@RequestMapping(value = "projects/{projectId}/edit", method = RequestMethod.POST)
-	public String edit(@PathVariable final int projectId, @Valid Project project, BindingResult result, Model model) {
-		if (result.hasErrors()) {
+	public String edit(@PathVariable final int projectId, @Valid Project project, BindingResult bindingResult, Model model) {
+		if (bindingResult.hasErrors()) {
 			return "project/edit";
 		}
 		

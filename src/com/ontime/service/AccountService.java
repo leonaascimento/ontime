@@ -47,7 +47,7 @@ public class AccountService {
 		
 		String hashpw = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
 		user.setPassword(hashpw);
-		user.setName("oi");
+		user.setImageUrl("https://api.adorable.io/avatars/120/" + user.getEmail() + ".png");
 		
 		dao.add(user);
 		return true;

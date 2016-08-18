@@ -30,6 +30,10 @@ public class TaskService {
 		return dao.getList(projectId);
 	}
 	
+	public List<Task> getList(int projectId, TaskStatus status) {
+		return dao.getList(projectId, status);
+	}
+	
 	public Task get(int id) {
 		return dao.get(id);
 	}

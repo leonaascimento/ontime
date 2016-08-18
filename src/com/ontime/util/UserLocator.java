@@ -13,7 +13,7 @@ import com.ontime.model.User;
 @Scope(value="request", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class UserLocator {
 	
-	public final String USER_SESSION_KEY = "SESSION_USER_KEY";
+	public final String USER_SESSION_KEY = "SESSION_KEY_USER";
 	
 	private HttpSession session;
 	

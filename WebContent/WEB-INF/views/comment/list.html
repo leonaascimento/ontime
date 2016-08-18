@@ -6,10 +6,11 @@
 
 <body>
 	<div th:fragment="content">
+		<h4 th:text="${task.title}"></h4>
+		<p th:text="${task.description}"></p>
 		<div class="row">
 			<form id="newComment" th:action="@{/api/projects/{projectId}/tasks/{taskId}/comments/create(projectId=${projectId},taskId=${taskId})}"
 				method="POST">
-
 				<div class="form-group">
 					<div class="col-md-12">
 						<label for="content" class="control-label">Coment&aacute;rio</label>
@@ -28,7 +29,8 @@
 		<ul class="media-list" id="comments">
 			<li class="media" th:each="comment : ${comments}">
 				<a href="#" class="pull-left">
-					<img class="img-circle" th:src="${comment.createdBy.imageUrl}" th:alt="${comment.createdBy.name}" height="64" width="64" />
+					<img class="img-circle" th:src="${comment.createdBy.imageUrl}" th:alt="${comment.createdBy.name}" height="64" width="64"
+					/>
 				</a>
 				<div class="media-body">
 					<span class="text-muted pull-right">

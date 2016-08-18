@@ -28,6 +28,10 @@ public class ProjectService {
 		return dao.getList();
 	}
 	
+	public List<Project> getList(int userId) {
+		return dao.getList(userId);
+	}
+	
 	public Project get(int id) {
 		return dao.get(id);
 	}

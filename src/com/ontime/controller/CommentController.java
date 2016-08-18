@@ -16,21 +16,27 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ontime.model.Comment;
+import com.ontime.model.Task;
 import com.ontime.service.CommentService;
+import com.ontime.service.TaskService;
 
 @Controller
 public class CommentController {
 
-	private CommentService service;
+	private CommentService commentService;
+	private TaskService taskService;
 
 	@Autowired
-	public CommentController(CommentService service) {
-		this.service = service;
+	public CommentController(CommentService commentService, TaskService taskService) {
+		this.commentService = commentService;
+		this.taskService = taskService;
 	}
 
 	@RequestMapping(value = "projects/{projectId}/tasks/{taskId}/comments", method = RequestMethod.GET)
 	public String list(@PathVariable final int projectId, @PathVariable final int taskId, Model model) {
-		List<Comment> comments = service.getList(taskId);
+		Task task = taskService.get(taskId);
+		List<Comment> comments = commentService.getList(taskId);
+		model.addAttribute(task);
 		model.addAttribute("comments", comments);
 		return "comment/list";
 	}
@@ -38,12 +44,12 @@ public class CommentController {
 	@ResponseBody
 	@RequestMapping(value = "/api/projects/{projectId}/tasks/{taskId}/comments/create", method = RequestMethod.POST)
 	public ResponseEntity<?> apiCreate(@PathVariable final int projectId, @PathVariable final int taskId,
-			@Valid Comment comment, BindingResult result, Model model) {
-		if (result.hasErrors()) {
-			return new ResponseEntity<>(result.getAllErrors(), HttpStatus.BAD_REQUEST);
+			@Valid Comment comment, BindingResult bindingResult, Model model) {
+		if (bindingResult.hasErrors()) {
+			return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
 		}
 
-		service.add(comment, taskId);
+		commentService.add(comment, taskId);
 
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}

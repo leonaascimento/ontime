@@ -10,7 +10,6 @@ public class HomeController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(Model model) {
-		model.addAttribute("message", "We are up and running!");
 		return "home/index";
 	}
 	

@@ -19,6 +19,11 @@ public class ProjectDAO {
 		String criteria = "select p from Project p";
 		return em.createQuery(criteria, Project.class).getResultList();
 	}
+	
+	public List<Project> getList(int createdById) {
+		String criteria = "select p from Project p where p.createdBy.id = :createdById";
+		return em.createQuery(criteria, Project.class).setParameter("createdById", createdById).getResultList();
+	}
 
 	public Project get(int id) {
 		String criteria = "select p from Project p where p.id = :id";

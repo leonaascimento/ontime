@@ -16,7 +16,7 @@ public class CommentDAO {
 	private EntityManager em;
 
 	public List<Comment> getList(int taskId) {
-		String criteria = "select c from Comment c join fetch c.createdBy where c.task.id = :taskId";
+		String criteria = "select c from Comment c join fetch c.createdBy where c.task.id = :taskId order by c.createdAt desc";
 		return em.createQuery(criteria, Comment.class).setParameter("taskId", taskId).getResultList();
 	}
 

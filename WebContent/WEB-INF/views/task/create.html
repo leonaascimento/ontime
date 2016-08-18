@@ -31,7 +31,7 @@
                     <div class="form-group" th:classappend="${#fields.hasErrors('assignedTo.id')}? has-error">
                         <label for="assignedTo.id" class="col-md-2 control-label">Respons&aacute;vel</label>
                         <div class="col-md-10">
-                            <select class="form-control" placeholder="Respons&aacute;vel" id="assignedTo" th:field="*{assignedTo.id}" th:attr="data-url=@{/users}"></select>
+                            <select class="form-control" placeholder="Respons&aacute;vel" id="assignedTo" th:field="*{assignedTo.id}" th:attr="data-url=@{/api/users}"></select>
                             <span class="help-block" th:if="${#fields.hasErrors('assignedTo.id')}" th:errors="*{assignedTo.id}"></span>
                         </div>
                     </div>
@@ -53,6 +53,7 @@
         </div>
     </div>
     <script type="text/javascript" th:fragment="script">
+    $(function () {
         $('#status').selectize();
 
 	    $('#assignedTo').selectize({
@@ -90,6 +91,7 @@
 	            });
 	        }
 	    });
+    });
     </script>
 </body>
 

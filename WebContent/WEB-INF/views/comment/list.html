@@ -6,73 +6,88 @@
 
 <body>
 	<div th:fragment="content">
-		<table class="table">
-			<thead>
-				<tr>
-					<th>Conte&uacute;do</th>
-				</tr>
-			</thead>
-			<th:block th:each="comment : ${comments}">
-				<tr>
-					<td th:text="${comment.content}"></td>
-				</tr>
-			</th:block>
-		</table>
-		<form th:action="@{/projects/{projectId}/tasks/{taskId}/comments/create(projectId=${projectId},taskId=${taskId})}" method="POST">
-			<div class="form-group">
-				<div class="col-md-12">
-					<textarea rows="5" class="form-control" id="content" name="content" placeholder="Coment&aacute;rio"></textarea>
-					<span class="help-block" id="content-help"></span>
+		<div class="row">
+			<form id="newComment" th:action="@{/api/projects/{projectId}/tasks/{taskId}/comments/create(projectId=${projectId},taskId=${taskId})}"
+				method="POST">
+
+				<div class="form-group">
+					<div class="col-md-12">
+						<label for="content" class="control-label">Coment&aacute;rio</label>
+						<textarea rows="5" class="form-control" id="content" name="content" placeholder="Coment&aacute;rio"></textarea>
+						<span class="help-block" id="content-help"></span>
+					</div>
 				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-md-10 col-md-offset-2">
-					<button type="submit" class="btn btn-primary">Enviar</button>
+				<div class="form-group">
+					<div class="col-md-12">
+						<button type="submit" class="btn btn-primary pull-right">Enviar</button>
+					</div>
 				</div>
-			</div>
-		</form>
+			</form>
+		</div>
+		<hr />
+		<ul class="media-list" id="comments">
+			<li class="media" th:each="comment : ${comments}">
+				<a href="#" class="pull-left">
+					<img class="img-circle" th:src="${comment.createdBy.imageUrl}" th:alt="${comment.createdBy.name}" height="64" width="64" />
+				</a>
+				<div class="media-body">
+					<span class="text-muted pull-right">
+                        <small class="text-muted" th:text="${#calendars.format(comment.createdAt, 'dd/MM/yyyy HH:mm')}"></small>
+                    </span>
+					<strong th:text="${comment.createdBy.name}"></strong>
+					<p th:text="${comment.content}"></p>
+				</div>
+			</li>
+		</ul>
 	</div>
 	<script type="text/javascript" th:fragment="script">
+	$(function () {
+		
+		var local_url = location.pathname;
+		var regex = /\/tasks\/(\d+)\/comments/i;
+		var taskId = regex.exec(local_url)[1];
+
 		var pusher = new Pusher('1903bfdf2d61093ea14d');
 		var channel = pusher.subscribe('comments-channel');
 
 		channel.bind('new_comment', function(data) {
-			$('.table > tbody:last-child').append('<tr><td>' + data.content + '</td></tr>');
+			if (data.taskId == taskId) {
+				var media = '<li class="media">' +
+	                '<a href="#" class="pull-left">' +
+	                    '<img class="img-circle" src="' + data.createdBy.imageUrl + '" alt="' + data.createdBy.name + '" height="64" width="64" />' +
+	                '</a>' +
+	                '<div class="media-body">' +
+	                    '<span class="text-muted pull-right">' +
+	                        '<small class="text-muted">' + moment(data.createdAt).format('DD/MM/YYYY HH:mm') + '</small>' +
+	                    '</span>' +
+	                    '<strong>' + data.createdBy.name + '</strong>' +
+	                    '<p>' +
+	                    	data.content +
+	                    '</p>' +
+	                '</div>' +
+	            '</li>';
+				
+				$('#comments').prepend(media);
+			}
 		});
 		
-		// process the form
-	    $('form').submit(function(event) {
-	    	
-	    	
-	        // get the form data
-	        // there are many ways to get this data using jQuery (you can use the class or id also)
-	        var formData = $(this).serializeArray();
-	        var formURL = $(this).attr("action");
+	    $('#newComment').submit(function(event) {
+	    	var form = this;
 	        
-	        console.log(formData);
-	        console.log(formURL);
-	        
-	        // process the form
 	        $.ajax({
-	            type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
-	            url         : formURL, // the url where we want to POST
-	            data        : formData, // our data object
-	            dataType    : 'json', // what type of data do we expect back from the server
-	                        encode          : true
-	        })
-	            // using the done promise callback
-	            .done(function(data) {
-
-	                // log data to the console so we can see
-	                console.log(data); 
-	                $('#content').val('');
-
-	                // here we will handle errors and validation messages
-	            });
-
-	        // stop the form from submitting the normal way and refreshing the page
+	            type: 'POST',
+	            url: $(form).attr("action"),
+	            data: $(form).serializeArray(),
+	            dataType: 'json',
+	            encode: true
+	        }).always(function() {
+				form.reset();
+  			});
+	        
 	        event.preventDefault();
 	    });
+		
+	});
 	</script>
 </body>
 

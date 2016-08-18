@@ -45,10 +45,10 @@ public class CommentService {
 		comment.setCreatedBy(userLocator.getCurrentUser());
 
 		dao.add(comment);
-
-		CommentSummaryViewModel created = new CommentSummaryViewModel(this.get(comment.getId()));
-
-		messaging.broadcastCreated(created);
+		
+		CommentSummaryViewModel commentSummary = new CommentSummaryViewModel(dao.get(comment.getId()));
+		
+		messaging.broadcastCreated(commentSummary);
 	}
 
 	@Transactional

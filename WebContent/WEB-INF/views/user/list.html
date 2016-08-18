@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:include="shared/layout :: layout">
+
+<head>
+</head>
+
+<body>
+	<div th:fragment="content">
+		<h4>Colaboradores</h4>
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Nome</th>
+					<th>E-mail</th>
+					<th></th>
+				</tr>
+			</thead>
+			<th:block th:each="user : ${users}">
+				<tr>
+					<td th:text="${user.id}"></td>
+					<td th:text="${user.name}"></td>
+					<td><a th:href="${'mailto:' + user.email}" th:text="${user.email}"></a></td>
+					<td class="text-right">
+						<div class="btn-group">
+							<a th:href="@{users/{userId}/projects(userId=${user.id})}" class="btn btn-default btn-sm">Abrir</a>
+							<a href="#" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a th:href="@{/users/{userId}/projects(userId=${user.id})}">Projetos</a></li>
+								<li class="divider"></li>
+								<li><a th:href="@{/users/{userId}(userId=${user.id})}">Detalhes</a></li>
+								<li><a th:if="${user.github != null}" th:href="${user.github}" target="_blank">GitHub</a></li>
+							</ul>
+						</div>
+					</td>
+				</tr>
+			</th:block>
+		</table>
+	</div>
+</body>
+
+</html>

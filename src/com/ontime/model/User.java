@@ -24,6 +24,7 @@ public class User {
 	private String email;
 	private String password;
 	private String github;
+	private String imageUrl;
 	private String studentId;
 	private List<Project> projects;
 	private List<Task> createdTasks;
@@ -78,6 +79,15 @@ public class User {
 
 	public void setGithub(String github) {
 		this.github = github;
+	}
+	
+	@Column(name = "image_url")
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 
 	@Column(name = "student_id")

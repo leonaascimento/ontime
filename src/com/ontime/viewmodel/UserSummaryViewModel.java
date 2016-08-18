@@ -7,23 +7,20 @@ public class UserSummaryViewModel {
 	private Integer id;
 	private String name;
 	private String email;
+	private String github;
+	private String imageUrl;
 	
 	public UserSummaryViewModel() {
 		
 	}
-	
-	public UserSummaryViewModel(Integer id, String name, String email) {
-		this();
-		this.setId(id);
-		this.setName(name);
-		this.setEmail(email);
-	}
-	
+
 	public UserSummaryViewModel(User user) {
 		this();
 		this.setId(user.getId());
 		this.setName(user.getName());
 		this.setEmail(user.getEmail());
+		this.setGithub(user.getGithub());
+		this.setImageUrl(user.getImageUrl());
 	}
 
 	public Integer getId() {
@@ -48,6 +45,22 @@ public class UserSummaryViewModel {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getGithub() {
+		return github;
+	}
+
+	public void setGithub(String github) {
+		this.github = github;
+	}
+	
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 
 }

@@ -28,19 +28,24 @@ public class UserService {
 		
 		List<UserSummaryViewModel> summarized = new ArrayList<>();
 		for (User user : users) {
-			UserSummaryViewModel summary = new UserSummaryViewModel(user.getId(), user.getName(), user.getEmail());
-			summarized.add(summary);
+			summarized.add(this.toSummary(user));
 		}
 		
 		return summarized;
 	}
 	
+	public UserSummaryViewModel getSummary(int id) {
+		User user = dao.get(id);
+		return this.toSummary(user);
+	}
+	
 	public UserSummaryViewModel getMyself() {
 		User currentUser = userLocator.getCurrentUser();
-		
-		UserSummaryViewModel myself = new UserSummaryViewModel(currentUser.getId(), currentUser.getName(), currentUser.getEmail());
-		
-		return myself;
+		return this.toSummary(currentUser);
+	}
+	
+	private UserSummaryViewModel toSummary(User user) {
+		return new UserSummaryViewModel(user);
 	}
 	
 }

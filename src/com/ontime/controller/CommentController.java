@@ -36,8 +36,8 @@ public class CommentController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "projects/{projectId}/tasks/{taskId}/comments/create", method = RequestMethod.POST)
-	public ResponseEntity<?> create(@PathVariable final int projectId, @PathVariable final int taskId,
+	@RequestMapping(value = "/api/projects/{projectId}/tasks/{taskId}/comments/create", method = RequestMethod.POST)
+	public ResponseEntity<?> apiCreate(@PathVariable final int projectId, @PathVariable final int taskId,
 			@Valid Comment comment, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return new ResponseEntity<>(result.getAllErrors(), HttpStatus.BAD_REQUEST);

@@ -24,9 +24,6 @@ footer > .container .text-muted {
 	margin: 20px 0;
 }
 
-/**
- * Email Contacts
- */
 .selectize-input [data-value] .email {
 	opacity: 0.5;
 }
@@ -43,4 +40,14 @@ footer > .container .text-muted {
 	font-size: 12px;
 	display: block;
 	opacity: 0.5;
+}
+
+.table-fixed {
+	table-layout: fixed;
+}
+
+.table-fixed td {
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

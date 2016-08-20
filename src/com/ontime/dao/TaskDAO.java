@@ -17,17 +17,17 @@ public class TaskDAO {
 	private EntityManager em;
 
 	public List<Task> getList(int projectId) {
-		String criteria = "select t from Task t where t.project.id = :projectId";
+		String criteria = "select t from Task t left join fetch t.assignedTo where t.project.id = :projectId";
 		return em.createQuery(criteria, Task.class).setParameter("projectId", projectId).getResultList();
 	}
 	
 	public List<Task> getList(int projectId, TaskStatus status) {
-		String criteria = "select t from Task t where t.project.id = :projectId and t.status = :status";
+		String criteria = "select t from Task t left join fetch t.assignedTo where t.project.id = :projectId and t.status = :status";
 		return em.createQuery(criteria, Task.class).setParameter("projectId", projectId).setParameter("status", status).getResultList();
 	}
 	
 	public Task get(int id) {
-		String criteria = "select t from Task t where t.id = :id";
+		String criteria = "select t from Task t left join fetch t.assignedTo where t.id = :id";
 		return em.createQuery(criteria, Task.class).setParameter("id", id).getSingleResult();
 	}
 

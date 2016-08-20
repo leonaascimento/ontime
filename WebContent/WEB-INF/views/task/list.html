@@ -18,6 +18,8 @@
 			<thead>
 				<tr>
 					<th>T&iacute;tulo</th>
+					<th>Situa&ccedil;&atilde;o</th>
+					<th>Respons&aacute;vel</th>
 					<th>Descri&ccedil;&atilde;o</th>
 					<th></th>
 				</tr>
@@ -25,6 +27,8 @@
 			<th:block th:each="task : ${tasks}">
 				<tr>
 					<td class="ellipsis" th:text="${task.title}"></td>
+					<td class="ellipsis" th:text="${task.status}"></td>
+					<td class="ellipsis" th:text="${task.assignedTo != null} ? ${task.assignedTo.name}"></td>
 					<td class="ellipsis" th:text="${task.description}"></td>
 					<td class="text-right">
 						<div  class="btn-group">

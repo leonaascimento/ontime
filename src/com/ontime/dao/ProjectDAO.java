@@ -16,17 +16,17 @@ public class ProjectDAO {
 	private EntityManager em;
 
 	public List<Project> getList() {
-		String criteria = "select p from Project p";
+		String criteria = "select p from Project p join fetch p.createdBy";
 		return em.createQuery(criteria, Project.class).getResultList();
 	}
 	
 	public List<Project> getList(int createdById) {
-		String criteria = "select p from Project p where p.createdBy.id = :createdById";
+		String criteria = "select p from Project p join fetch p.createdBy where p.createdBy.id = :createdById";
 		return em.createQuery(criteria, Project.class).setParameter("createdById", createdById).getResultList();
 	}
 
 	public Project get(int id) {
-		String criteria = "select p from Project p where p.id = :id";
+		String criteria = "select p from Project p join fetch p.createdBy where p.id = :id";
 		return em.createQuery(criteria, Project.class).setParameter("id", id).getSingleResult();
 	}
 

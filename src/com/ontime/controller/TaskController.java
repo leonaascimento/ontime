@@ -31,13 +31,12 @@ public class TaskController {
 	@RequestMapping(value = "projects/{projectId}/tasks", method = RequestMethod.GET)
 	public String list(@PathVariable final int projectId, @RequestParam(required = false) final TaskStatus status, Model model) {
 		List<Task> tasks;
-		
 		if (status != null) {
 			tasks = service.getList(projectId, status);
 		} else {
 			tasks = service.getList(projectId);
 		}
-		
+		model.addAttribute("status", status);
 		model.addAttribute("tasks", tasks);
 		return "task/list";
 	}

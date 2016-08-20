@@ -6,9 +6,15 @@
 
 <body>
 	<div th:fragment="content">
-		<h4>Tarefas</h4>
-		<a th:href="@{/projects/{projectId}/tasks/create(projectId=${projectId})}" class="btn btn-primary">Adicionar Tarefa</a>
-		<table class="table table-fixed">
+		<h4 class="pull-left">Tarefas</h4>
+	  	<div class="btn-group pull-right">
+	    	<a class="btn btn-default" th:classappend="${status == null} ? active" th:href="@{/projects/{projectId}/tasks(projectId=${projectId})}">Todas</a>
+	    	<a class="btn btn-default" th:classappend="${status == T(com.ontime.model.TaskStatus).NEW} ? active" th:href="@{/projects/{projectId}/tasks(projectId=${projectId},status=NEW)}">Novas</a>
+	    	<a class="btn btn-default" th:classappend="${status == T(com.ontime.model.TaskStatus).OPEN} ? active" th:href="@{/projects/{projectId}/tasks(projectId=${projectId},status=OPEN)}">Abertas</a>
+	    	<a class="btn btn-default" th:classappend="${status == T(com.ontime.model.TaskStatus).CLOSED} ? active" th:href="@{/projects/{projectId}/tasks(projectId=${projectId},status=CLOSED)}">Fechadas</a>
+	    	<a class="btn btn-primary" th:href="@{/projects/{projectId}/tasks/create(projectId=${projectId})}">Adicionar</a>
+	  	</div>
+		<table class="table table-hover table-fixed">
 			<thead>
 				<tr>
 					<th>T&iacute;tulo</th>
@@ -18,8 +24,8 @@
 			</thead>
 			<th:block th:each="task : ${tasks}">
 				<tr>
-					<td th:text="${task.title}"></td>
-					<td th:text="${task.description}"></td>
+					<td class="ellipsis" th:text="${task.title}"></td>
+					<td class="ellipsis" th:text="${task.description}"></td>
 					<td class="text-right">
 						<div  class="btn-group">
 							<a th:href="@{/projects/{projectId}/tasks/{taskId}/edit(projectId=${projectId},taskId=${task.id})}" class="btn btn-default btn-sm">Abrir</a>
@@ -37,6 +43,7 @@
 				</tr>
 			</th:block>
 		</table>
+		<a class="btn btn-link" th:href="@{/projects}">Voltar</a>
 	</div>
 </body>
 

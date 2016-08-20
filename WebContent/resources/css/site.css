@@ -46,7 +46,7 @@ footer > .container .text-muted {
 	table-layout: fixed;
 }
 
-.table-fixed td {
+.table-fixed .ellipsis {
 	white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

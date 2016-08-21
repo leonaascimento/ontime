@@ -104,7 +104,7 @@ public class Task {
 		this.closedAt = closedAt;
 	}
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "created_by_id", nullable = false, updatable = false)
 	public User getCreatedBy() {
 		return createdBy;
@@ -114,7 +114,7 @@ public class Task {
 		this.createdBy = createdBy;
 	}
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "assigned_to_id")
 	public User getAssignedTo() {
 		return assignedTo;
@@ -124,7 +124,7 @@ public class Task {
 		this.assignedTo = assignedTo;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "closed_by_id")
 	public User getClosedBy() {
 		return closedBy;
@@ -134,7 +134,7 @@ public class Task {
 		this.closedBy = closedBy;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "project_id", nullable = false, updatable = false)
 	public Project getProject() {
 		return project;

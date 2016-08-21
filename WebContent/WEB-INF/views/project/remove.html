@@ -6,15 +6,23 @@
 
 <body>
     <div class="row" th:fragment="content">
-        <h2 th:text="${project.name}"></h2>
-        <dl class="dl-horizontal">
-            <dt>Nome</dt>
-            <dd th:text="${project.name}"></dd>
-            <dt>Descri&ccedil;&atilde;o</dt>
-            <dd th:text="${project.description}"></dd>
-            <dt>Linguagem</dt>
-            <dd th:text="${project.language}"></dd>
-        </dl>
+        <h4>Remover</h4>
+		<dl class="dl-horizontal">
+			<dt>Nome</dt>
+			<dd th:text="${project.name}"></dd>
+			<dt>Linguagem</dt>
+			<dd th:text="${project.language}"></dd>
+			<dt>Tags</dt>
+			<dd th:text="${project.tags}"></dd>
+			<dt>Url</dt>
+			<dd th:text="${project.url}"></dd>
+			<dt>Criado por</dt>
+			<dd th:text="${project.createdBy.name}"></dd>
+			<dt>Criado em</dt>
+			<dd th:text="${#calendars.format(project.createdAt, 'dd/MM/yyyy HH:mm')}"></dd>
+			<dt>Descri&ccedil;&atilde;o</dt>
+			<dd th:text="${project.description}"></dd>
+		</dl>
         <form class="form-horizontal" th:action="@{/projects/remove(id=${project.id})}" method="POST" th:object="${project}">
             <div class="form-group">
                 <input type="hidden" th:field="*{id}" />

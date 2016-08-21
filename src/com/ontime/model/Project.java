@@ -107,7 +107,7 @@ public class Project {
 		this.createdAt = createdAt;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "created_by_id", nullable = false, updatable = false)
 	public User getCreatedBy() {
 		return createdBy;

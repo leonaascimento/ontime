@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ontime.dao.UserDAO;
 import com.ontime.model.User;
 import com.ontime.util.LoginResult;
+import com.ontime.util.RegisterResult;
 import com.ontime.util.UserLocator;
 
 @Service
@@ -41,16 +42,16 @@ public class AccountService {
 	}
 	
 	@Transactional
-	public Boolean register(User user) {
+	public RegisterResult register(User user) {
 		if (dao.exists(user.getEmail()))
-			return false;
+			return RegisterResult.ALREADY_EXISTS;
 		
 		String hashpw = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
 		user.setPassword(hashpw);
 		user.setImageUrl("https://api.adorable.io/avatars/120/" + user.getEmail() + ".png");
 		
 		dao.add(user);
-		return true;
+		return RegisterResult.SUCCESS;
 	}
 	
 	public void logout() {

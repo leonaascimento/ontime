@@ -10,7 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
@@ -53,6 +53,7 @@ public class User {
 	}
 
 	@Column(name = "email")
+	@NotBlank
 	@Email
 	public String getEmail() {
 		return email;
@@ -63,7 +64,7 @@ public class User {
 	}
 
 	@Column(name = "password")
-	@NotNull
+	@NotBlank
 	public String getPassword() {
 		return password;
 	}
@@ -73,6 +74,7 @@ public class User {
 	}
 
 	@Column(name = "github")
+	@Pattern(regexp = "^$|github.com/[^/]*", message = "Deve ser um usuário do GitHub. (i.e. https://github.com/leonaascimento)")
 	public String getGithub() {
 		return github;
 	}

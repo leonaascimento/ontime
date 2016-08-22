@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.ontime.model.User;
 import com.ontime.service.AccountService;
 import com.ontime.util.LoginResult;
+import com.ontime.util.RegisterResult;
 import com.ontime.viewmodel.LoginUserViewModel;
 
 @Controller
@@ -24,18 +25,18 @@ public class AccountController {
 
 	@RequestMapping(value = "account/login", method = RequestMethod.GET)
 	public String login(Model model) {
-		LoginUserViewModel login = new LoginUserViewModel();
-		model.addAttribute("login", login);
+		LoginUserViewModel loginUserViewModel = new LoginUserViewModel();
+		model.addAttribute(loginUserViewModel);
 		return "account/login";
 	}
 
 	@RequestMapping(value = "account/login", method = RequestMethod.POST)
-	public String login(@Valid LoginUserViewModel login, BindingResult bindingResult, Model model) {
+	public String login(@Valid LoginUserViewModel loginUserViewModel, BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
 			return "account/login";
 		}
 		
-		LoginResult loginResult = service.login(login.getEmail(), login.getPassword());
+		LoginResult loginResult = service.login(loginUserViewModel.getEmail(), loginUserViewModel.getPassword());
 
 		if (loginResult != LoginResult.SUCCESS) {
 			String message = "Tente novamente mais tarde.";
@@ -45,7 +46,6 @@ public class AccountController {
 				message = "A senha inserida está incorreta.";
 			}
 			model.addAttribute("message", message);
-			model.addAttribute("login", login);
 			return "account/login";
 		}
 
@@ -65,10 +65,10 @@ public class AccountController {
 			return "account/register"; 
 		}
 		
-		Boolean registerSucceeded = service.register(user);
+		RegisterResult registerResult = service.register(user);
 
-		if (!registerSucceeded) {
-			model.addAttribute("message", "Tente novamente mais tarde.");
+		if (registerResult == RegisterResult.ALREADY_EXISTS) {
+			model.addAttribute("message", "Já existe um usuário cadastrado com esse e-mail.");
 			return "account/register";
 		}
 

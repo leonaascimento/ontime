@@ -25,7 +25,6 @@ public class User {
 	private String password;
 	private String github;
 	private String imageUrl;
-	private String studentId;
 	private List<Project> projects;
 	private List<Task> createdTasks;
 	private List<Task> assignedTasks;
@@ -74,7 +73,7 @@ public class User {
 	}
 
 	@Column(name = "github")
-	@Pattern(regexp = "^$|github.com/[^/]*", message = "Deve ser um usuário do GitHub. (i.e. https://github.com/leonaascimento)")
+	@Pattern(regexp = "^$|^https://github.com/[^/]*$", message = "Deve ser um usuário do GitHub.")
 	public String getGithub() {
 		return github;
 	}
@@ -90,15 +89,6 @@ public class User {
 
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
-	}
-
-	@Column(name = "student_id")
-	public String getStudentId() {
-		return studentId;
-	}
-
-	public void setStudentId(String studentId) {
-		this.studentId = studentId;
 	}
 	
 	@OneToMany(mappedBy="createdBy", fetch = FetchType.LAZY)

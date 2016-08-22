@@ -13,9 +13,8 @@
 			<dt>Descri&ccedil;&atilde;o</dt>
 			<dd th:text="${task.description}"></dd>
 		</dl>
-        <form class="form-horizontal" method="POST" th:object="${task}">
+        <form class="form-horizontal" th:action="@{/projects/{projectId}/tasks/{taskId}/remove(projectId=${projectId},taskId=${taskId})}" method="POST">
             <div class="form-group">
-                <input type="hidden" th:field="*{id}" />
                 <div class="col-lg-10 col-lg-offset-2">
                     <a class="btn btn-link" th:href="@{/projects/{projectId}/tasks(projectId=${projectId})}">Voltar</a>
                     <button type="submit" class="btn btn-danger">Remover</button>

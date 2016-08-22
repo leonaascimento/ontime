@@ -53,8 +53,7 @@ public class ProjectService {
 	
 	@Transactional
 	public void remove(int id) {
-		Project project = new Project();
-		project.setId(id);
+		Project project = this.get(id);
 		dao.remove(project);
 	}
 	

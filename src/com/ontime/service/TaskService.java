@@ -83,7 +83,8 @@ public class TaskService {
 	
 	@Transactional
 	public void remove(int id) {
-		dao.remove(new Task(id));
+		Task task = this.get(id);
+		dao.remove(task);
 	}
 
 }

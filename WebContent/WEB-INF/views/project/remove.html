@@ -23,9 +23,8 @@
 			<dt>Descri&ccedil;&atilde;o</dt>
 			<dd th:text="${project.description}"></dd>
 		</dl>
-        <form class="form-horizontal" th:action="@{/projects/remove(id=${project.id})}" method="POST" th:object="${project}">
+        <form class="form-horizontal" th:action="@{/projects/{projectId}/remove(projectId=${project.id})}" method="POST">
             <div class="form-group">
-                <input type="hidden" th:field="*{id}" />
                 <div class="col-lg-10 col-lg-offset-2">
                     <a class="btn btn-link" th:href="@{/projects}">Cancelar</a>
                     <button type="submit" class="btn btn-danger">Remover</button>

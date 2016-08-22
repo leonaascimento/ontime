@@ -18,6 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
@@ -57,6 +58,7 @@ public class Task {
 	}
 
 	@NotBlank
+	@Length(max = 255)
 	@Column(name = "title", nullable = false)
 	public String getTitle() {
 		return title;
@@ -66,6 +68,7 @@ public class Task {
 		this.title = title;
 	}
 
+	@Length(max = 255)
 	@Column(name = "description")
 	public String getDescription() {
 		return description;

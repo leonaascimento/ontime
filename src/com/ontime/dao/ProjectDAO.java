@@ -16,7 +16,7 @@ public class ProjectDAO {
 	private EntityManager em;
 
 	public List<Project> getList() {
-		String criteria = "select p from Project p";
+		String criteria = "select p from Project p order by p.createdAt desc";
 		return em.createQuery(criteria, Project.class).getResultList();
 	}
 	

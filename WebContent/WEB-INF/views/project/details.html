@@ -15,7 +15,7 @@
 			<dt>Tags</dt>
 			<dd th:text="${project.tags}"></dd>
 			<dt>Url</dt>
-			<dd th:text="${project.url}"></dd>
+			<dd><a th:href="${project.url}" th:text="${project.url}"></a></dd>
 			<dt>Criado por</dt>
 			<dd th:text="${project.createdBy.name}"></dd>
 			<dt>Criado em</dt>

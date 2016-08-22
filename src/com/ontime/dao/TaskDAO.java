@@ -17,7 +17,7 @@ public class TaskDAO {
 	private EntityManager em;
 
 	public List<Task> getList(int projectId) {
-		String criteria = "select t from Task t where t.project.id = :projectId";
+		String criteria = "select t from Task t where t.project.id = :projectId order by t.createdAt desc";
 		return em.createQuery(criteria, Task.class).setParameter("projectId", projectId).getResultList();
 	}
 	

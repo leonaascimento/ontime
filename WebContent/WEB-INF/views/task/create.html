@@ -7,7 +7,7 @@
 <body>
     <div class="row" th:fragment="content">
         <div class="well bs-component">
-            <form class="form-horizontal" method="POST" th:object="${task}">
+            <form class="form-horizontal" th:action="@{/projects/{projectId}/tasks/create(projectId=${projectId})}" method="POST" th:object="${task}">
                 <fieldset>
                     <legend>Tarefa</legend>
                     <div class="form-group" th:classappend="${#fields.hasErrors('title')}? has-error">

@@ -15,7 +15,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
 
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
@@ -53,6 +55,7 @@ public class Project {
 	}
 
 	@NotBlank
+	@Length(max = 255)
 	@Column(name = "name", nullable = false)
 	public String getName() {
 		return name;
@@ -61,7 +64,8 @@ public class Project {
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	
+	@Length(max = 255)
 	@Column(name = "description")
 	public String getDescription() {
 		return description;
@@ -70,7 +74,9 @@ public class Project {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
+	
+	@Length(max = 255)
+	@Pattern(regexp = "^$|^http.?://.*$", message = "Deve ser uma url.")
 	@Column(name = "url")
 	public String getUrl() {
 		return url;
@@ -79,7 +85,8 @@ public class Project {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-
+	
+	@Length(max = 255)
 	@Column(name = "language")
 	public String getLanguage() {
 		return language;
@@ -88,7 +95,8 @@ public class Project {
 	public void setLanguage(String language) {
 		this.language = language;
 	}
-
+	
+	@Length(max = 255)
 	@Column(name = "tags")
 	public String getTags() {
 		return tags;

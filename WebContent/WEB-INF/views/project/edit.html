@@ -7,7 +7,7 @@
 <body>
     <div class="row" th:fragment="content">
         <div class="well bs-component">
-            <form class="form-horizontal" th:action="@{/projects/edit(id=${project.id})}" method="POST" th:object="${project}">
+            <form class="form-horizontal" th:action="@{/projects/{projectId}/edit(projectId=${projectId})}" method="POST" th:object="${project}">
                 <fieldset>
                     <legend>Projeto</legend>
                     <input type="hidden" th:field="*{id}" />
@@ -30,6 +30,14 @@
                         <div class="col-md-10">
                             <input type="text" class="form-control" placeholder="Tags" th:field="*{tags}" />
                             <span class="help-block" th:if="${#fields.hasErrors('tags')}" th:errors="*{tags}"></span>
+                        </div>
+                    </div>
+                    <div class="form-group" th:classappend="${#fields.hasErrors('url')}? has-error">
+                        <label for="tags" class="col-md-2 control-label">Url</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" placeholder="Url" th:field="*{url}" />
+                            <span class="help-block" th:if="${#fields.hasErrors('url')}" th:errors="*{url}"></span>
+                            <span class="help-block">e.g. https://github.com/leonaascimento/ontime</span>
                         </div>
                     </div>
                     <div class="form-group" th:classappend="${#fields.hasErrors('description')}? has-error">

@@ -20,7 +20,7 @@
 			<dt>Tags</dt>
 			<dd th:text="${project.tags}"></dd>
 			<dt>Url</dt>
-			<dd th:text="${project.url}"></dd>
+			<dd><a th:href="${project.url}" th:text="${project.url}"></a></dd>
 			<dt>Criado por</dt>
 			<dd th:text="${project.createdBy.name}"></dd>
 			<dt>Criado em</dt>
@@ -28,7 +28,7 @@
 			<dt>Descri&ccedil;&atilde;o</dt>
 			<dd th:text="${project.description}"></dd>
 		</dl>
-        <form class="form-horizontal" th:action="@{/projects/{projectId}/remove(projectId=${project.id})}" method="POST">
+        <form class="form-horizontal" th:action="@{/projects/{projectId}/remove(projectId=${projectId})}" method="POST">
             <div class="form-group">
                 <div class="col-lg-12">
                     <a class="btn btn-link" th:href="@{/projects}">Cancelar</a>

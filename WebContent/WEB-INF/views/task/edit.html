@@ -7,7 +7,7 @@
 <body>
     <div class="row" th:fragment="content">
         <div class="well bs-component">
-            <form class="form-horizontal" method="POST" th:object="${task}">
+            <form class="form-horizontal" th:action="@{/projects/{projectId}/tasks/{taskId}/edit(projectId=${projectId},taskId=${taskId})}" method="POST" th:object="${task}">
                 <fieldset>
                     <legend>Tarefa</legend>
                     <input type="hidden" th:field="*{id}" />
@@ -32,7 +32,9 @@
                     <div class="form-group" th:classappend="${#fields.hasErrors('assignedTo.id')}? has-error">
                         <label for="assignedTo.id" class="col-md-2 control-label">Respons&aacute;vel</label>
                         <div class="col-md-10">
-                            <select class="form-control" placeholder="Respons&aacute;vel" id="assignedTo" th:field="*{assignedTo.id}" th:attr="data-url=@{/api/users}"></select>
+                            <select class="form-control" placeholder="Respons&aacute;vel" id="assignedTo" th:field="*{assignedTo.id}" th:attr="data-url=@{/api/users}">
+                            	<option th:if="${task.assignedTo != null}" th:value="${task.assignedTo.id}" th:text="${task.assignedTo.name}" selected="selected"></option>
+                            </select>
                             <span class="help-block" th:if="${#fields.hasErrors('assignedTo.id')}" th:errors="*{assignedTo.id}"></span>
                         </div>
                     </div>

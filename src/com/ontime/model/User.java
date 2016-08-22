@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
@@ -41,8 +42,9 @@ public class User {
 		this.id = id;
 	}
 
-	@Column(name = "name")
 	@NotBlank
+	@Length(max = 255)
+	@Column(name = "name")
 	public String getName() {
 		return name;
 	}
@@ -51,9 +53,10 @@ public class User {
 		this.name = name;
 	}
 
-	@Column(name = "email")
 	@NotBlank
 	@Email
+	@Length(max = 255)
+	@Column(name = "email")
 	public String getEmail() {
 		return email;
 	}
@@ -62,8 +65,9 @@ public class User {
 		this.email = email;
 	}
 
-	@Column(name = "password")
 	@NotBlank
+	@Length(max = 255)
+	@Column(name = "password")
 	public String getPassword() {
 		return password;
 	}
@@ -72,8 +76,9 @@ public class User {
 		this.password = password;
 	}
 
+	@Pattern(regexp = "^$|^http.?://github.com/[^/]*$", message = "Deve ser um usuário do GitHub.")
+	@Length(max = 255)
 	@Column(name = "github")
-	@Pattern(regexp = "^$|^https://github.com/[^/]*$", message = "Deve ser um usuário do GitHub.")
 	public String getGithub() {
 		return github;
 	}
@@ -82,6 +87,7 @@ public class User {
 		this.github = github;
 	}
 	
+	@Length(max = 255)
 	@Column(name = "image_url")
 	public String getImageUrl() {
 		return imageUrl;

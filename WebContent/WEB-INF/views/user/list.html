@@ -29,7 +29,7 @@
 								<li><a th:href="@{/projects(userId=${user.id})}">Projetos</a></li>
 								<li class="divider"></li>
 								<li><a th:href="@{/users/{userId}(userId=${user.id})}">Detalhes</a></li>
-								<li><a th:if="${user.github != null}" th:href="${user.github}" target="_blank">GitHub</a></li>
+								<li><a th:if="${user.github != null and user.github != ''}" th:href="${user.github}" target="_blank">GitHub</a></li>
 							</ul>
 						</div>
 					</td>

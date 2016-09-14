@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:include="shared/layout :: layout">
+
+<head>
+</head>
+
+<body>
+	<div th:fragment="content">
+		<h4>Detalhes</h4>
+		<dl class="dl-horizontal">
+			<dt>T&iacute;tulo</dt>
+			<dd th:text="${task.title}"></dd>
+			<dt>Situa&ccedil;&atilde;o</dt>
+			<dd th:text="${task.status}"></dd>
+			<dt th:if="${task.status == T(com.ontime.model.TaskStatus).CLOSED}">Fechada por</dt>
+			<dd th:if="${task.status == T(com.ontime.model.TaskStatus).CLOSED}" th:text="${task.closedBy != null} ? ${task.closedBy.name}"></dd>
+			<dt th:if="${task.status == T(com.ontime.model.TaskStatus).CLOSED}">Fechada em</dt>
+			<dd th:if="${task.status == T(com.ontime.model.TaskStatus).CLOSED}" th:text="${task.closedAt}"></dd>
+			<dt>Respons&aacute;vel</dt>
+			<dd th:text="${task.assignedTo != null} ? ${task.assignedTo.name}"></dd>
+			<dt>Criada por</dt>
+			<dd th:text="${task.createdBy.name}"></dd>
+			<dt>Criada em</dt>
+			<dd th:text="${task.createdAt}"></dd>
+			<dt>Descri&ccedil;&atilde;o</dt>
+			<dd th:text="${task.description}"></dd>
+		</dl>
+		<a class="btn btn-link" th:href="@{/projects/{projectId}/tasks(projectId=${projectId})}">Voltar</a>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:include="shared/layout :: layout">
+
+<head>
+</head>
+
+<body>
+    <div class="row" th:fragment="content">
+        <div class="well bs-component">
+            <form class="form-horizontal" th:action="@{/projects/create}" method="POST" th:object="${project}">
+                <fieldset>
+                    <legend>Projeto</legend>
+                    <div class="form-group" th:classappend="${#fields.hasErrors('name')}? has-error">
+                        <label for="name" class="col-md-2 control-label">Nome</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" placeholder="Nome" th:field="*{name}" />
+                            <span class="help-block" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+                        </div>
+                    </div>
+                    <div class="form-group" th:classappend="${#fields.hasErrors('language')}? has-error">
+                        <label for="language" class="col-md-2 control-label">Linguagem</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" placeholder="Linguagem" th:field="*{language}" />
+                            <span class="help-block" th:if="${#fields.hasErrors('language')}" th:errors="*{language}"></span>
+                        </div>
+                    </div>
+                    <div class="form-group" th:classappend="${#fields.hasErrors('tags')}? has-error">
+                        <label for="tags" class="col-md-2 control-label">Tags</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" placeholder="Tags" th:field="*{tags}" />
+                            <span class="help-block" th:if="${#fields.hasErrors('tags')}" th:errors="*{tags}"></span>
+                        </div>
+                    </div>
+                    <div class="form-group" th:classappend="${#fields.hasErrors('url')}? has-error">
+                        <label for="tags" class="col-md-2 control-label">Url</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" placeholder="Url" th:field="*{url}" />
+                            <span class="help-block" th:if="${#fields.hasErrors('url')}" th:errors="*{url}"></span>
+                            <span class="help-block">e.g. https://github.com/leonaascimento/ontime</span>
+                        </div>
+                    </div>
+                    <div class="form-group" th:classappend="${#fields.hasErrors('description')}? has-error">
+                        <label for="description" class="col-md-2 control-label">Descri&ccedil;&atilde;o</label>
+                        <div class="col-md-10">
+                            <textarea rows="5" class="form-control" placeholder="Desri&ccedil;&atilde;o" th:field="*{description}"></textarea>
+                            <span class="help-block" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-10 col-md-offset-2">
+                            <a class="btn btn-link" th:href="@{/projects}">Cancelar</a>
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript" th:fragment="script">
+        $(function() {
+
+            $('#language').selectize({
+                plugins: ['remove_button'],
+                persist: false,
+                valueField: 'name',
+                labelField: 'name',
+                searchField: ['name'],
+                options: [{ name: 'C#' },
+                          { name: 'Java' },
+                          { name: 'PHP' },
+                          { name: 'Python' }]
+            });
+
+            $('#tags').selectize({
+                plugins: ['remove_button'],
+                delimiter: ',',
+                persist: false,
+                create: function(input) {
+                    return {
+                        value: input,
+                        text: input
+                    }
+                }
+            });
+
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:include="shared/layout :: layout">
+
+<head>
+</head>
+
+<body>
+    <div class="row" th:fragment="content">
+        <div class="well bs-component">
+            <form class="form-horizontal" th:action="@{/projects/{projectId}/tasks/create(projectId=${projectId})}" method="POST" th:object="${task}">
+                <fieldset>
+                    <legend>Tarefa</legend>
+                    <div class="form-group" th:classappend="${#fields.hasErrors('title')}? has-error">
+                        <label for="title" class="col-md-2 control-label">T&iacute;tulo</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" placeholder="T&iacute;tulo" th:field="*{title}" />
+                            <span class="help-block" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+                        </div>
+                    </div>
+                    <div class="form-group" th:classappend="${#fields.hasErrors('status')}? has-error">
+                        <label for="status" class="col-md-2 control-label">Situa&ccedil;&atilde;o</label>
+                        <div class="col-md-10">
+                            <select class="form-control" placeholder="Situa&ccedil;&atilde;o" th:field="*{status}">
+                                <option value="NEW">Nova</option>
+                                <option value="OPEN">Aberta</option>
+                                <option value="CLOSED">Fechada</option>
+                            </select>
+                            <span class="help-block" th:if="${#fields.hasErrors('status')}" th:errors="*{status}"></span>
+                        </div>
+                    </div>
+                    <div class="form-group" th:classappend="${#fields.hasErrors('assignedTo.id')}? has-error">
+                        <label for="assignedTo.id" class="col-md-2 control-label">Respons&aacute;vel</label>
+                        <div class="col-md-10">
+                            <select class="form-control" placeholder="Respons&aacute;vel" id="assignedTo" th:field="*{assignedTo.id}" th:attr="data-url=@{/api/users}"></select>
+                            <span class="help-block" th:if="${#fields.hasErrors('assignedTo.id')}" th:errors="*{assignedTo.id}"></span>
+                        </div>
+                    </div>
+                    <div class="form-group" th:classappend="${#fields.hasErrors('description')}? has-error">
+                        <label for="description" class="col-md-2 control-label">Descri&ccedil;&atilde;o</label>
+                        <div class="col-md-10">
+                            <textarea rows="5" class="form-control" placeholder="Desri&ccedil;&atilde;o" th:field="*{description}"></textarea>
+                            <span class="help-block" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-10 col-md-offset-2">
+                            <a class="btn btn-link" th:href="@{/projects/{projectId}/tasks(projectId=${projectId})}">Cancelar</a>
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript" th:fragment="script">
+    $(function () {
+        $('#status').selectize();
+
+	    $('#assignedTo').selectize({
+	        persist: false,
+	        valueField: 'id',
+	        labelField: 'name',
+	        searchField: ['name', 'email'],
+	        render: {
+	            item: function(item, escape) {
+	                return '<div>' +
+	                    (item.name ? '<span class="name">' + escape(item.name) + '</span>' : '') +
+	                    (item.email ? '<span class="email">' + escape(item.email) + '</span>' : '') +
+	                '</div>';
+	            },
+	            option: function(item, escape) {
+	                var label = item.name || item.email;
+	                var caption = item.name ? item.email : null;
+	                return '<div>' +
+	                    '<span>' + escape(label) + '</span>' +
+	                    (caption ? '<span class="caption">' + escape(caption) + '</span>' : '') +
+                   	'</div>';
+	            }
+	        },
+	        load: function(query, callback) {
+	            if (!query.length) return callback();
+	            $.ajax({
+	                url: $('#assignedTo').data('url'),
+	                type: 'GET',
+	                error: function() {
+	                    callback();
+	                },
+	                success: function(res) {
+	                    callback(res);
+	                }
+	            });
+	        }
+	    });
+    });
+    </script>
+</body>
+
+</html>

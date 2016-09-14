@@ -1,9 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" th:include="shared/layout :: layout">
+
 <head>
-<title>Ontime</title>
 </head>
+
 <body>
-	<h1 th:text="${message}">Hello World</h1>
+	<div th:fragment="content">
+		<h4 th:text="${message}"></h4>
+		<div class="jumbotron">
+			<h1>ontime</h1>
+			<p>O ontime &eacute; uma aplica&ccedil;&atilde;o web para gerenciamento de tarefas constru&iacute;do com o Spring MVC.</p>
+			<p><a class="btn btn-primary btn-lg" href="https://github.com/leonaascimento/ontime" target="_blank">Saiba mais</a></p>
+		</div>
+	</div>
 </body>
+
 </html>

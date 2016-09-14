@@ -1,0 +1,53 @@
+html {
+	position: relative;
+	min-height: 100%;
+}
+
+body {
+	padding-top: 70px;
+	margin-bottom: 60px;
+}
+
+footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 60px;
+}
+
+footer > .container {
+	padding-right: 15px;
+	padding-left: 15px;
+}
+
+footer > .container .text-muted {
+	margin: 20px 0;
+}
+
+.selectize-input [data-value] .email {
+	opacity: 0.5;
+}
+.selectize-input [data-value] .name + .email {
+	margin-left: 5px;
+}
+.selectize-input [data-value] .email:before {
+	content: '<';
+}
+.selectize-input [data-value] .email:after {
+	content: '>';
+}
+.selectize-dropdown .caption {
+	font-size: 12px;
+	display: block;
+	opacity: 0.5;
+}
+
+.table-fixed {
+	table-layout: fixed;
+}
+
+.table-fixed .ellipsis {
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:include="shared/layout :: layout">
+
+<head>
+</head>
+
+<body>
+	<div th:fragment="content">
+		<h4 th:text="${task.title}"></h4>
+		<p th:text="${task.description}"></p>
+		<div class="row">
+			<form id="newComment" th:action="@{/api/projects/{projectId}/tasks/{taskId}/comments/create(projectId=${projectId},taskId=${taskId})}"
+				method="POST">
+				<div class="form-group">
+					<div class="col-md-12">
+						<label for="content" class="control-label">Coment&aacute;rio</label>
+						<textarea rows="5" class="form-control" id="content" name="content" placeholder="Coment&aacute;rio"></textarea>
+						<span class="help-block" id="content-help"></span>
+					</div>
+				</div>
+				<div class="form-group pull-right">
+					<div class="col-md-12">
+						<a class="btn btn-link" th:href="@{/projects/{projectId}/tasks/{taskId}(projectId=${projectId},taskId=${taskId})}">Cancelar</a>
+						<button type="submit" class="btn btn-primary">Enviar</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<hr />
+		<ul class="media-list" id="comments">
+			<li class="media" th:each="comment : ${comments}">
+				<a href="#" class="pull-left">
+					<img class="img-circle" th:src="${comment.createdBy.imageUrl}" th:alt="${comment.createdBy.name}" height="64" width="64"
+					/>
+				</a>
+				<div class="media-body">
+					<span class="text-muted pull-right">
+                        <small class="text-muted" th:text="${#calendars.format(comment.createdAt, 'dd/MM/yyyy HH:mm')}"></small>
+                    </span>
+					<strong th:text="${comment.createdBy.name}"></strong>
+					<p th:text="${comment.content}"></p>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<script type="text/javascript" th:fragment="script">
+	$(function () {
+		
+		var local_url = location.pathname;
+		var regex = /\/tasks\/(\d+)\/comments/i;
+		var taskId = regex.exec(local_url)[1];
+
+		var pusher = new Pusher('1903bfdf2d61093ea14d');
+		var channel = pusher.subscribe('comments-channel');
+
+		channel.bind('new_comment', function(data) {
+			if (data.taskId == taskId) {
+				var media = '<li class="media">' +
+	                '<a href="#" class="pull-left">' +
+	                    '<img class="img-circle" src="' + data.createdBy.imageUrl + '" alt="' + data.createdBy.name + '" height="64" width="64" />' +
+	                '</a>' +
+	                '<div class="media-body">' +
+	                    '<span class="text-muted pull-right">' +
+	                        '<small class="text-muted">' + moment(data.createdAt).format('DD/MM/YYYY HH:mm') + '</small>' +
+	                    '</span>' +
+	                    '<strong>' + data.createdBy.name + '</strong>' +
+	                    '<p>' +
+	                    	data.content +
+	                    '</p>' +
+	                '</div>' +
+	            '</li>';
+				
+				$('#comments').prepend(media);
+			}
+		});
+		
+	    $('#newComment').submit(function(event) {
+	    	var form = this;
+	        
+	        $.ajax({
+	            type: 'POST',
+	            url: $(form).attr("action"),
+	            data: $(form).serializeArray(),
+	            dataType: 'json',
+	            encode: true
+	        }).always(function() {
+				form.reset();
+  			});
+	        
+	        event.preventDefault();
+	    });
+		
+	});
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:include="shared/layout :: layout">
+
+<head>
+</head>
+
+<body>
+	<div th:fragment="content">
+		<h4>Detalhes</h4>
+		<dl class="dl-horizontal">
+			<dt>Nome</dt>
+			<dd th:text="${user.name}"></dd>
+			<dt>E-mail</dt>
+			<dd th:text="${user.email}"></dd>
+			<dt>GitHub</dt>
+			<dd><a th:href="${user.github}" th:text="${user.github}"></a></dd>
+		</dl>
+		<a class="btn btn-link" th:href="@{/users}">Voltar</a>
+	</div>
+</body>
+
+</html>

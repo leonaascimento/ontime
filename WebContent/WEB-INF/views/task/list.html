@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:include="shared/layout :: layout">
+
+<head>
+</head>
+
+<body>
+	<div th:fragment="content">
+		<h4 class="pull-left">Tarefas</h4>
+	  	<div class="btn-group pull-right">
+	    	<a class="btn btn-default" th:classappend="${status == null} ? active" th:href="@{/projects/{projectId}/tasks(projectId=${projectId})}">Todas</a>
+	    	<a class="btn btn-default" th:classappend="${status == T(com.ontime.model.TaskStatus).NEW} ? active" th:href="@{/projects/{projectId}/tasks(projectId=${projectId},status=NEW)}">Novas</a>
+	    	<a class="btn btn-default" th:classappend="${status == T(com.ontime.model.TaskStatus).OPEN} ? active" th:href="@{/projects/{projectId}/tasks(projectId=${projectId},status=OPEN)}">Abertas</a>
+	    	<a class="btn btn-default" th:classappend="${status == T(com.ontime.model.TaskStatus).CLOSED} ? active" th:href="@{/projects/{projectId}/tasks(projectId=${projectId},status=CLOSED)}">Fechadas</a>
+	    	<a class="btn btn-primary" th:href="@{/projects/{projectId}/tasks/create(projectId=${projectId})}">Adicionar</a>
+	  	</div>
+		<table class="table table-hover table-fixed">
+			<thead>
+				<tr>
+					<th>T&iacute;tulo</th>
+					<th>Situa&ccedil;&atilde;o</th>
+					<th>Respons&aacute;vel</th>
+					<th>Descri&ccedil;&atilde;o</th>
+					<th></th>
+				</tr>
+			</thead>
+			<th:block th:each="task : ${tasks}">
+				<tr>
+					<td class="ellipsis" th:text="${task.title}"></td>
+					<td class="ellipsis" th:text="${task.status}"></td>
+					<td class="ellipsis" th:text="${task.assignedTo != null} ? ${task.assignedTo.name}"></td>
+					<td class="ellipsis" th:text="${task.description}"></td>
+					<td class="text-right">
+						<div  class="btn-group">
+							<a th:href="@{/projects/{projectId}/tasks/{taskId}/edit(projectId=${projectId},taskId=${task.id})}" class="btn btn-default btn-sm">Abrir</a>
+							<a href="#" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a th:href="@{/projects/{projectId}/tasks/{taskId}/comments(projectId=${projectId},taskId=${task.id})}">Coment&aacute;rios</a></li>
+								<li class="divider"></li>
+								<li><a th:href="@{/projects/{projectId}/tasks/{taskId}(projectId=${projectId},taskId=${task.id})}">Detalhes</a></li>
+								<li><a th:href="@{/projects/{projectId}/tasks/{taskId}/edit(projectId=${projectId},taskId=${task.id})}">Editar</a></li>
+								<li class="divider"></li>
+								<li><a th:href="@{/projects/{projectId}/tasks/{taskId}/remove(projectId=${projectId},taskId=${task.id})}">Remover</a></li>
+							</ul>
+						</div>
+					</td>
+				</tr>
+			</th:block>
+		</table>
+		<a class="btn btn-link" th:href="@{/projects}">Voltar</a>
+	</div>
+</body>
+
+</html>
